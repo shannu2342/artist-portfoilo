@@ -7,8 +7,8 @@ const AboutPage = ({ content }) => {
             <section className="about-hero">
                 <div className="container">
                     <div className="about-hero-content">
-                        <h1>About the Artist</h1>
-                        <p>Where creativity meets passion</p>
+                        <h1>About AUREXON</h1>
+                        <p>Creating Beyond the Canvas</p>
                     </div>
                 </div>
             </section>
@@ -22,27 +22,28 @@ const AboutPage = ({ content }) => {
                             </div>
                         </div>
                         <div className="about-text">
-                            <h2>My Journey</h2>
+                            <h2>About AUREXON</h2>
                             <div className="about-description">
                                 {content || (
                                     <>
                                         <p>
-                                            I discovered my love for art at a very young age, finding solace in the vibrant world of colors and shapes.
-                                            What started as a childhood hobby soon evolved into a lifelong passion that drives me every single day.
+                                            AUREXON is a digital painting studio dedicated to pure creativity, artistic expression, and visual storytelling.
+                                            The studio focuses on crafting high-quality digital artworks that combine imagination, emotion, and refined
+                                            aesthetics, without being bound by trends or templates.
                                         </p>
                                         <p>
-                                            With over a decade of experience in various artistic mediums, I've honed my skills and developed a unique
-                                            style that blends traditional techniques with contemporary expressions. Each artwork is a reflection of my
-                                            emotions, experiences, and the world around me.
+                                            At its core, AUREXON is about artistry over automation. Every piece is thoughtfully designed and painted
+                                            with attention to form, color, mood, and detail resulting in visuals that feel expressive, original, and
+                                            timeless. The studio embraces a hands-on creative process, valuing depth, craftsmanship, and personal
+                                            vision in every artwork.
                                         </p>
                                         <p>
-                                            My artistic journey has been filled with exploration - from experimenting with different materials to
-                                            participating in numerous exhibitions and art fairs. The constant pursuit of perfection and innovation keeps
-                                            my work fresh and dynamic.
+                                            AUREXON explores a wide range of artistic themes, from concept art and stylized illustrations to expressive
+                                            visual narratives, always driven by a strong sense of composition and storytelling. The focus remains on
+                                            creating art that connects emotionally, inspires curiosity, and leaves a lasting impression.
                                         </p>
                                         <p>
-                                            When I'm not painting, you can find me teaching art workshops, mentoring young artists, or exploring new
-                                            destinations to draw inspiration from diverse cultures and landscapes.
+                                            AUREXON is not just a studio it is a creative space where ideas are shaped into meaningful visual art.
                                         </p>
                                     </>
                                 )}
@@ -56,50 +57,45 @@ const AboutPage = ({ content }) => {
                 <div className="container">
                     <div className="philosophy-content">
                         <h2>Artistic Philosophy</h2>
-                        <div className="philosophy-text">
-                            <p>
-                                <i className="fas fa-quote-left"></i>
-                                Art is not just about creating beautiful images; it's about telling stories, evoking emotions, and capturing
-                                the essence of the human experience. Each stroke of the brush is a conversation between the artist and the canvas,
-                                where ideas take shape and emotions come alive.
-                                <i className="fas fa-quote-right"></i>
-                            </p>
+                        <div className="philosophy-grid">
+                            <div className="philosophy-image">
+                                <img src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=800&h=600&fit=crop" alt="Artistic Philosophy" />
+                            </div>
+                            <div className="philosophy-text">
+                                <p>
+                                    <i className="fas fa-quote-left"></i>
+                                    At AUREXON, art is a journey of exploration and expression. We believe that every artwork should tell a story,
+                                    evoke emotions, and leave a lasting impression. Our creative process is driven by passion, imagination, and a
+                                    commitment to artistic excellence.
+                                    <i className="fas fa-quote-right"></i>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section className="art-materials">
+            <section className="art-gallery-preview">
                 <div className="container">
-                    <h2>Favorite Materials</h2>
-                    <div className="materials-grid">
-                        <div className="material-card">
-                            <div className="material-icon">
-                                <i className="fas fa-palette"></i>
+                    <h2>Featured Works</h2>
+                    <div className="gallery-preview-grid">
+                        <div className="gallery-preview-item">
+                            <img src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=400&h=300&fit=crop" alt="Abstract Art" />
+                            <div className="gallery-preview-overlay">
+                                <h3>Abstract Expression</h3>
                             </div>
-                            <h3>Acrylic Paints</h3>
-                            <p>Vibrant colors with quick drying time</p>
                         </div>
-                        <div className="material-card">
-                            <div className="material-icon">
-                                <i className="fas fa-brush"></i>
+                        <div className="gallery-preview-item">
+                            <img src="https://images.unsplash.com/photo-1544510808-91bcbee1df55?w=400&h=300&fit=crop" alt="Concept Art" />
+                            <div className="gallery-preview-overlay">
+                                <h3>Concept Art</h3>
                             </div>
-                            <h3>Oil Paints</h3>
-                            <p>Rich textures and deep color saturation</p>
                         </div>
-                        <div className="material-card">
-                            <div className="material-icon">
-                                <i className="fas fa-water"></i>
+                        <div className="gallery-preview-item">
+                            <img src="https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?w=400&h=300&fit=crop" alt="Digital Painting" />
+                            <div className="gallery-preview-overlay">
+                                <h3>Digital Painting</h3>
                             </div>
-                            <h3>Watercolors</h3>
-                            <p>Transparent and delicate wash effects</p>
-                        </div>
-                        <div className="material-card">
-                            <div className="material-icon">
-                                <i className="fas fa-pencil-alt"></i>
-                            </div>
-                            <h3>Charcoal</h3>
-                            <p>Expressive strokes and dramatic contrasts</p>
                         </div>
                     </div>
                 </div>
@@ -107,24 +103,15 @@ const AboutPage = ({ content }) => {
 
             <section className="achievements">
                 <div className="container">
-                    <h2>Achievements & Recognitions</h2>
+                    <h2>Our Journey</h2>
                     <div className="achievements-list">
                         <div className="achievement-item">
                             <div className="achievement-icon">
-                                <i className="fas fa-trophy"></i>
+                                <i className="fas fa-palette"></i>
                             </div>
                             <div className="achievement-content">
-                                <h3>Best Emerging Artist</h3>
-                                <p>International Art Festival, 2020</p>
-                            </div>
-                        </div>
-                        <div className="achievement-item">
-                            <div className="achievement-icon">
-                                <i className="fas fa-medal"></i>
-                            </div>
-                            <div className="achievement-content">
-                                <h3>Gold Medal</h3>
-                                <p>National Painting Competition, 2021</p>
+                                <h3>Studio Founded</h3>
+                                <p>2018</p>
                             </div>
                         </div>
                         <div className="achievement-item">
@@ -132,17 +119,26 @@ const AboutPage = ({ content }) => {
                                 <i className="fas fa-award"></i>
                             </div>
                             <div className="achievement-content">
-                                <h3>People's Choice Award</h3>
-                                <p>Urban Art Exhibition, 2022</p>
+                                <h3>International Recognition</h3>
+                                <p>2021</p>
                             </div>
                         </div>
                         <div className="achievement-item">
                             <div className="achievement-icon">
-                                <i className="fas fa-star"></i>
+                                <i className="fas fa-users"></i>
                             </div>
                             <div className="achievement-content">
-                                <h3>Art Excellence Award</h3>
-                                <p>Contemporary Art Gallery, 2023</p>
+                                <h3>Global Clientele</h3>
+                                <p>20+ Countries</p>
+                            </div>
+                        </div>
+                        <div className="achievement-item">
+                            <div className="achievement-icon">
+                                <i className="fas fa-images"></i>
+                            </div>
+                            <div className="achievement-content">
+                                <h3>Artworks Created</h3>
+                                <p>500+</p>
                             </div>
                         </div>
                     </div>

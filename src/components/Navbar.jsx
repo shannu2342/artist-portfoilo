@@ -28,8 +28,8 @@ const Navbar = () => {
         <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
             <div className="container">
                 <Link to="/" className="logo" onClick={handleNavClick}>
-                    <i className="fas fa-palette"></i>
-                    <span>Artist Portfolio</span>
+                    <img src="/src/assets/logo.png" alt="Aurexon" className="logo-img" />
+                    <span>Aurexon</span>
                 </Link>
 
                 <div className={`nav-menu ${isMenuOpen ? 'active' : ''}`} id="navMenu">

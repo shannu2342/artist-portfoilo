@@ -153,7 +153,7 @@
 
 .input-group input {
     width: 100%;
-    padding: 1rem 1rem 1rem 3rem;
+    padding: 1rem 3rem 1rem 3rem;
     border: 2px solid var(--border-color);
     border-radius: 12px;
     font-family: inherit;
@@ -172,6 +172,32 @@
 .input-group input::placeholder {
     color: var(--text-light);
     opacity: 0.7;
+}
+
+.show-password-btn {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: var(--transition);
+    z-index: 1;
+}
+
+.show-password-btn:hover {
+    color: var(--primary-color);
+    background: var(--bg-light);
+}
+
+.show-password-btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
 }
 
 .form-options {

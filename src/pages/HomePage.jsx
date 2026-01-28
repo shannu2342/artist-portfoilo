@@ -29,10 +29,10 @@ const HomePage = ({ gallery, whatsAppNumber }) => {
                         <div className="hero-text">
                             <h1>
                                 <span className="hero-greeting">Welcome to</span>
-                                <span className="hero-name">Artist Portfolio</span>
+                                <span className="hero-name">Aurexon</span>
                             </h1>
                             <p className="hero-tagline">
-                                Discover beautiful handcrafted artworks that tell stories of passion and creativity
+                                Creating Beyond the Canvas
                             </p>
                             <div className="hero-actions">
                                 <Link to="/gallery" className="btn btn-primary">

@@ -8,6 +8,7 @@ const AdminLogin = ({ onLogin }) => {
     const [remember, setRemember] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
@@ -74,13 +75,21 @@ const AdminLogin = ({ onLogin }) => {
                             <div className="input-group">
                                 <i className="fas fa-lock"></i>
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     id="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="Enter your password"
                                     required
                                 />
+                                <button
+                                    type="button"
+                                    className="show-password-btn"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    aria-label={showPassword ? "Hide password" : "Show password"}
+                                >
+                                    <i className={`fas fa-${showPassword ? 'eye-slash' : 'eye'}`}></i>
+                                </button>
                             </div>
                         </div>
 

@@ -7,8 +7,8 @@ const Footer = () => {
             <div className="container">
                 <div className="footer-content">
                     <div className="footer-section">
-                        <h3>Artist Portfolio</h3>
-                        <p>Showcasing creativity through digital artistry. Every piece tells a story of passion and dedication.</p>
+                        <h3>Aurexon</h3>
+                        <p>Creating Beyond the Canvas. Every piece tells a story of passion and dedication.</p>
                     </div>
 
                     <div className="footer-section">
@@ -50,7 +50,7 @@ const Footer = () => {
                 </div>
 
                 <div className="footer-bottom">
-                    <p>&copy; 2024 Artist Portfolio. All rights reserved. Crafted with <i className="fas fa-heart"></i> for art lovers.</p>
+                    <p>&copy; 2024 Aurexon. All rights reserved. Crafted with <i className="fas fa-heart"></i> for art lovers.</p>
                 </div>
             </div>
         </footer>
