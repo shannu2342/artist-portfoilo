@@ -46,6 +46,12 @@ const App = () => {
         if (savedTerms) {
             setTermsContent(savedTerms);
         }
+
+        // Check if admin was previously logged in
+        const savedAdminLoggedIn = localStorage.getItem('adminLoggedIn');
+        if (savedAdminLoggedIn === 'true') {
+            setAdminLoggedIn(true);
+        }
     }, []);
 
     const addArtwork = (artwork) => {
