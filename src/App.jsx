@@ -107,7 +107,9 @@ const App = () => {
     return (
         <Router>
             <div className="App">
-                <Navbar />
+                {/* Show Navbar, Footer, and WhatsApp button only on public pages */}
+                {!window.location.pathname.startsWith('/admin') && <Navbar />}
+
                 <Routes>
                     <Route path="/" element={
                         <HomePage
@@ -158,8 +160,9 @@ const App = () => {
                         />
                     } />
                 </Routes>
-                <Footer />
-                <WhatsAppButton number={whatsAppNumber} />
+
+                {!window.location.pathname.startsWith('/admin') && <Footer />}
+                {!window.location.pathname.startsWith('/admin') && <WhatsAppButton number={whatsAppNumber} />}
             </div>
         </Router>
     );
