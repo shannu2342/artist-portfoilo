@@ -14,7 +14,64 @@ import AdminLogin from './pages/AdminLogin';
 
 const App = () => {
     const [whatsAppNumber, setWhatsAppNumber] = useState('919876543210');
-    const [gallery, setGallery] = useState([]);
+    const [gallery, setGallery] = useState([
+        {
+            id: 1,
+            title: 'Abstract Expression',
+            description: 'A vibrant abstract painting featuring bold colors and dynamic brushstrokes.',
+            image: 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=800&h=800&fit=crop',
+            category: 'abstract'
+        },
+        {
+            id: 2,
+            title: 'Mountain Sunset',
+            description: 'A stunning landscape painting depicting a mountain range at sunset.',
+            image: 'https://images.unsplash.com/photo-1544510808-91bcbee1df55?w=800&h=800&fit=crop',
+            category: 'landscape'
+        },
+        {
+            id: 3,
+            title: 'Portrait of Grace',
+            description: 'A beautiful portrait capturing the essence of grace and elegance.',
+            image: 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?w=800&h=800&fit=crop',
+            category: 'portrait'
+        },
+        {
+            id: 4,
+            title: 'Ocean Waves',
+            description: 'A mesmerizing painting of ocean waves crashing against the shore.',
+            image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=800&fit=crop',
+            category: 'nature'
+        },
+        {
+            id: 5,
+            title: 'City Lights',
+            description: 'A vibrant cityscape painting featuring bright lights and towering buildings.',
+            image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800&h=800&fit=crop',
+            category: 'cityscape'
+        },
+        {
+            id: 6,
+            title: 'Floral Beauty',
+            description: 'A delicate painting of colorful flowers in full bloom.',
+            image: 'https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?w=800&h=800&fit=crop',
+            category: 'nature'
+        },
+        {
+            id: 7,
+            title: 'Geometric Patterns',
+            description: 'A modern painting featuring intricate geometric patterns and shapes.',
+            image: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=800&h=800&fit=crop',
+            category: 'abstract'
+        },
+        {
+            id: 8,
+            title: 'Forest Path',
+            description: 'A serene painting of a winding path through a dense forest.',
+            image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=800&fit=crop',
+            category: 'landscape'
+        }
+    ]);
     const [services, setServices] = useState([]);
     const [aboutContent, setAboutContent] = useState('');
     const [termsContent, setTermsContent] = useState('');
@@ -30,6 +87,68 @@ const App = () => {
         const savedGallery = localStorage.getItem('gallery');
         if (savedGallery) {
             setGallery(JSON.parse(savedGallery));
+        } else {
+            // Save initial gallery to localStorage
+            const initialGallery = [
+                {
+                    id: 1,
+                    title: 'Abstract Expression',
+                    description: 'A vibrant abstract painting featuring bold colors and dynamic brushstrokes.',
+                    image: 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=800&h=800&fit=crop',
+                    category: 'abstract'
+                },
+                {
+                    id: 2,
+                    title: 'Mountain Sunset',
+                    description: 'A stunning landscape painting depicting a mountain range at sunset.',
+                    image: 'https://images.unsplash.com/photo-1544510808-91bcbee1df55?w=800&h=800&fit=crop',
+                    category: 'landscape'
+                },
+                {
+                    id: 3,
+                    title: 'Portrait of Grace',
+                    description: 'A beautiful portrait capturing the essence of grace and elegance.',
+                    image: 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?w=800&h=800&fit=crop',
+                    category: 'portrait'
+                },
+                {
+                    id: 4,
+                    title: 'Ocean Waves',
+                    description: 'A mesmerizing painting of ocean waves crashing against the shore.',
+                    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=800&fit=crop',
+                    category: 'nature'
+                },
+                {
+                    id: 5,
+                    title: 'City Lights',
+                    description: 'A vibrant cityscape painting featuring bright lights and towering buildings.',
+                    image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800&h=800&fit=crop',
+                    category: 'cityscape'
+                },
+                {
+                    id: 6,
+                    title: 'Floral Beauty',
+                    description: 'A delicate painting of colorful flowers in full bloom.',
+                    image: 'https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?w=800&h=800&fit=crop',
+                    category: 'nature'
+                },
+                {
+                    id: 7,
+                    title: 'Geometric Patterns',
+                    description: 'A modern painting featuring intricate geometric patterns and shapes.',
+                    image: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=800&h=800&fit=crop',
+                    category: 'abstract'
+                },
+                {
+                    id: 8,
+                    title: 'Forest Path',
+                    description: 'A serene painting of a winding path through a dense forest.',
+                    image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=800&fit=crop',
+                    category: 'landscape'
+                }
+            ];
+            setGallery(initialGallery);
+            localStorage.setItem('gallery', JSON.stringify(initialGallery));
         }
 
         const savedServices = localStorage.getItem('services');
