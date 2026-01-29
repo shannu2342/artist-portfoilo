@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
+import logo from '../assets/logo.svg';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,7 +29,7 @@ const Navbar = () => {
         <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
             <div className="container">
                 <Link to="/" className="logo" onClick={handleNavClick}>
-                    <img src="/src/assets/logo.png" alt="Aurexon" className="logo-img" />
+                    <img src={logo} alt="Aurexon" className="logo-img" />
                     <span>Aurexon</span>
                 </Link>
 

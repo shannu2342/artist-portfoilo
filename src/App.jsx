@@ -11,6 +11,13 @@ import ContactPage from './pages/ContactPage';
 import GalleryPage from './pages/GalleryPage';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLogin from './pages/AdminLogin';
+import AddPainting from './pages/AddPainting';
+import ManagePaintings from './pages/ManagePaintings';
+import EditPainting from './pages/EditPainting';
+import EditAbout from './pages/EditAbout';
+import EditServices from './pages/EditServices';
+import EditTerms from './pages/EditTerms';
+import EditWhatsApp from './pages/EditWhatsApp';
 
 const App = () => {
     const [whatsAppNumber, setWhatsAppNumber] = useState('919876543210');
@@ -275,6 +282,43 @@ const App = () => {
                             termsContent={termsContent}
                             onUpdateTerms={updateTerms}
                             whatsAppNumber={whatsAppNumber}
+                            onUpdateWhatsAppNumber={updateWhatsAppNumber}
+                        />
+                    } />
+                    <Route path="/admin/add-painting" element={
+                        <AddPainting
+                            onAddArtwork={addArtwork}
+                        />
+                    } />
+                    <Route path="/admin/manage-paintings" element={
+                        <ManagePaintings
+                            gallery={gallery}
+                            onDeleteArtwork={deleteArtwork}
+                            onUpdateArtwork={updateArtwork}
+                        />
+                    } />
+                    <Route path="/admin/edit-painting" element={
+                        <EditPainting
+                            onUpdateArtwork={updateArtwork}
+                        />
+                    } />
+                    <Route path="/admin/edit-about" element={
+                        <EditAbout
+                            onUpdateAbout={updateAbout}
+                        />
+                    } />
+                    <Route path="/admin/edit-services" element={
+                        <EditServices
+                            onUpdateServices={updateServices}
+                        />
+                    } />
+                    <Route path="/admin/edit-terms" element={
+                        <EditTerms
+                            onUpdateTerms={updateTerms}
+                        />
+                    } />
+                    <Route path="/admin/edit-whatsapp" element={
+                        <EditWhatsApp
                             onUpdateWhatsAppNumber={updateWhatsAppNumber}
                         />
                     } />

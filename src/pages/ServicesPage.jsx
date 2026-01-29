@@ -41,7 +41,11 @@ const ServicesPage = ({ services, whatsAppNumber }) => {
         }
     ];
 
-    const displayServices = services.length > 0 ? services : defaultServices;
+    const displayServices = services.length > 0 ? services.map(service => ({
+        ...service,
+        title: service.name,
+        icon: 'fa-paint-brush' // Default icon if not provided
+    })) : defaultServices;
 
     const handleWhatsAppClick = (service) => {
         const message = encodeURIComponent(`Hello, I'm interested in your "${service.title}" service. Please share details.`);

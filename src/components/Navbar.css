@@ -39,6 +39,12 @@
     transform: scale(1.05);
 }
 
+.logo-img {
+    height: 50px;
+    width: auto;
+    margin-right: 0.5rem;
+}
+
 .logo i {
     font-size: 1.75rem;
 }
