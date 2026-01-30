@@ -40,9 +40,12 @@
 }
 
 .logo-img {
-    height: 50px;
-    width: auto;
+    width: 140px;
+    height: 36px;
+    object-fit: cover;
+    object-position: left center;
     margin-right: 0.5rem;
+    display: block;
 }
 
 .logo i {
@@ -118,6 +121,11 @@
 }
 
 @media (max-width: 768px) {
+    .logo-img {
+        width: 120px;
+        height: 32px;
+    }
+
     .nav-menu {
         position: fixed;
         left: -100%;
