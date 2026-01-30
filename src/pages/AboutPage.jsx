@@ -53,53 +53,7 @@ const AboutPage = ({ content }) => {
                 </div>
             </section>
 
-            <section className="artistic-philosophy">
-                <div className="container">
-                    <div className="philosophy-content">
-                        <h2>Artistic Philosophy</h2>
-                        <div className="philosophy-grid">
-                            <div className="philosophy-image">
-                                <img src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=800&h=600&fit=crop" alt="Artistic Philosophy" />
-                            </div>
-                            <div className="philosophy-text">
-                                <p>
-                                    <i className="fas fa-quote-left"></i>
-                                    At AUREXON, art is a journey of exploration and expression. We believe that every artwork should tell a story,
-                                    evoke emotions, and leave a lasting impression. Our creative process is driven by passion, imagination, and a
-                                    commitment to artistic excellence.
-                                    <i className="fas fa-quote-right"></i>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            <section className="art-gallery-preview">
-                <div className="container">
-                    <h2>Featured Works</h2>
-                    <div className="gallery-preview-grid">
-                        <div className="gallery-preview-item">
-                            <img src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=400&h=300&fit=crop" alt="Abstract Art" />
-                            <div className="gallery-preview-overlay">
-                                <h3>Abstract Expression</h3>
-                            </div>
-                        </div>
-                        <div className="gallery-preview-item">
-                            <img src="https://images.unsplash.com/photo-1544510808-91bcbee1df55?w=400&h=300&fit=crop" alt="Concept Art" />
-                            <div className="gallery-preview-overlay">
-                                <h3>Concept Art</h3>
-                            </div>
-                        </div>
-                        <div className="gallery-preview-item">
-                            <img src="https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?w=400&h=300&fit=crop" alt="Digital Painting" />
-                            <div className="gallery-preview-overlay">
-                                <h3>Digital Painting</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             <section className="achievements">
                 <div className="container">
