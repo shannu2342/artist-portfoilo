@@ -34,8 +34,8 @@
     position: absolute;
     bottom: 1rem;
     right: 1rem;
-    width: 56px;
-    height: 56px;
+    width: 72px;
+    height: 72px;
     background: rgba(0, 0, 0, 0.45);
     border-radius: 50%;
     display: flex;
@@ -47,8 +47,8 @@
 }
 
 .watermark-logo {
-    width: 70%;
-    height: 70%;
+    width: 80%;
+    height: 80%;
     object-fit: contain;
     display: block;
 }
