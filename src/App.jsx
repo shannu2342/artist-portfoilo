@@ -34,12 +34,29 @@ const App = () => {
             setWhatsAppNumber(savedNumber);
         }
 
-        // Clear existing gallery data from localStorage to remove demo images
-        localStorage.removeItem('gallery');
-        // Initialize with empty gallery
-        const initialGallery = [];
-        setGallery(initialGallery);
-        localStorage.setItem('gallery', JSON.stringify(initialGallery));
+        // Fetch artworks from backend
+        const fetchArtworks = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/artworks');
+                if (response.ok) {
+                    const artworks = await response.json();
+                    setGallery(artworks);
+                }
+            } catch (error) {
+                console.error('Error fetching artworks:', error);
+                // Fallback to localStorage if API fails
+                const savedGallery = localStorage.getItem('gallery');
+                if (savedGallery) {
+                    setGallery(JSON.parse(savedGallery));
+                } else {
+                    const initialGallery = [];
+                    setGallery(initialGallery);
+                    localStorage.setItem('gallery', JSON.stringify(initialGallery));
+                }
+            }
+        };
+
+        fetchArtworks();
 
         const savedServices = localStorage.getItem('services');
         if (savedServices) {
@@ -63,24 +80,80 @@ const App = () => {
         }
     }, []);
 
-    const addArtwork = (artwork) => {
-        const newGallery = [...gallery, artwork];
-        setGallery(newGallery);
-        localStorage.setItem('gallery', JSON.stringify(newGallery));
+    const addArtwork = async (artwork) => {
+        try {
+            const response = await fetch('http://localhost:5000/api/artworks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                },
+                body: JSON.stringify(artwork)
+            });
+
+            if (response.ok) {
+                const newArtwork = await response.json();
+                const newGallery = [...gallery, newArtwork];
+                setGallery(newGallery);
+            }
+        } catch (error) {
+            console.error('Error adding artwork:', error);
+            // Fallback to localStorage if API fails
+            const newGallery = [...gallery, artwork];
+            setGallery(newGallery);
+            localStorage.setItem('gallery', JSON.stringify(newGallery));
+        }
     };
 
-    const updateArtwork = (id, updatedArtwork) => {
-        const newGallery = gallery.map(art =>
-            art.id === id ? updatedArtwork : art
-        );
-        setGallery(newGallery);
-        localStorage.setItem('gallery', JSON.stringify(newGallery));
+    const updateArtwork = async (id, updatedArtwork) => {
+        try {
+            const response = await fetch(`http://localhost:5000/api/artworks/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                },
+                body: JSON.stringify(updatedArtwork)
+            });
+
+            if (response.ok) {
+                const updated = await response.json();
+                const newGallery = gallery.map(art =>
+                    art._id === id ? updated : art
+                );
+                setGallery(newGallery);
+            }
+        } catch (error) {
+            console.error('Error updating artwork:', error);
+            // Fallback to localStorage if API fails
+            const newGallery = gallery.map(art =>
+                art._id === id ? updatedArtwork : art
+            );
+            setGallery(newGallery);
+            localStorage.setItem('gallery', JSON.stringify(newGallery));
+        }
     };
 
-    const deleteArtwork = (id) => {
-        const newGallery = gallery.filter(art => art.id !== id);
-        setGallery(newGallery);
-        localStorage.setItem('gallery', JSON.stringify(newGallery));
+    const deleteArtwork = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:5000/api/artworks/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                }
+            });
+
+            if (response.ok) {
+                const newGallery = gallery.filter(art => art._id !== id);
+                setGallery(newGallery);
+            }
+        } catch (error) {
+            console.error('Error deleting artwork:', error);
+            // Fallback to localStorage if API fails
+            const newGallery = gallery.filter(art => art._id !== id);
+            setGallery(newGallery);
+            localStorage.setItem('gallery', JSON.stringify(newGallery));
+        }
     };
 
     const updateServices = (newServices) => {

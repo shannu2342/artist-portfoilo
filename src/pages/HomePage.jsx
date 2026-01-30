@@ -120,7 +120,7 @@ const HomePage = ({ gallery, whatsAppNumber }) => {
                     <div className="artwork-grid">
                         {featuredArtworks.map((artwork) => (
                             <ArtworkCard
-                                key={artwork.id}
+                                key={artwork._id}
                                 artwork={artwork}
                                 onWhatsAppClick={handleWhatsAppClick}
                                 onViewClick={handleViewClick}

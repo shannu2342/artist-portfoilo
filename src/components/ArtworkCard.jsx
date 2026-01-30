@@ -17,7 +17,7 @@ const ArtworkCard = ({ artwork, onWhatsAppClick, onViewClick }) => {
         <div className="artwork-card">
             <div className="artwork-image-container">
                 <img
-                    src={artwork.image}
+                    src={`http://localhost:5000${artwork.image}`}
                     alt={artwork.title}
                     className="artwork-image"
                     onContextMenu={handleContextMenu}

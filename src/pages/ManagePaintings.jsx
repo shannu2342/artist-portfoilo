@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ManagePaintings.css';
 
-const ManagePaintings = () => {
+const ManagePaintings = ({ gallery, onDeleteArtwork, onUpdateArtwork }) => {
     const navigate = useNavigate();
     const [paintings, setPaintings] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -11,9 +11,8 @@ const ManagePaintings = () => {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
     useEffect(() => {
-        const galleryData = JSON.parse(localStorage.getItem('gallery')) || [];
-        setPaintings(galleryData);
-    }, []);
+        setPaintings(gallery);
+    }, [gallery]);
 
     const filteredPaintings = paintings.filter(painting => {
         const matchesSearch = painting.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -30,9 +29,7 @@ const ManagePaintings = () => {
     const confirmDelete = () => {
         if (!selectedPainting) return;
 
-        const updatedPaintings = paintings.filter(p => p.id !== selectedPainting.id);
-        setPaintings(updatedPaintings);
-        localStorage.setItem('gallery', JSON.stringify(updatedPaintings));
+        onDeleteArtwork(selectedPainting._id);
         setShowDeleteConfirm(false);
         setSelectedPainting(null);
     };
@@ -107,9 +104,9 @@ const ManagePaintings = () => {
                             </div>
                         ) : (
                             filteredPaintings.map(painting => (
-                                <div key={painting.id} className="painting-card">
+                                <div key={painting._id} className="painting-card">
                                     <div className="painting-image">
-                                        <img src={painting.image} alt={painting.title} />
+                                        <img src={`http://localhost:5000${painting.image}`} alt={painting.title} />
                                         {painting.category && (
                                             <div className={`category-badge ${painting.category}`}>
                                                 {painting.category.charAt(0).toUpperCase() + painting.category.slice(1)}

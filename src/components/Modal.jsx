@@ -48,7 +48,7 @@ const Modal = ({ isOpen, onClose, artwork, onWhatsAppClick }) => {
                 <div className="modal-body">
                     <div className="modal-image-container">
                         <img
-                            src={artwork.image}
+                            src={`http://localhost:5000${artwork.image}`}
                             alt={artwork.title}
                             className="modal-image"
                             onContextMenu={handleContextMenu}

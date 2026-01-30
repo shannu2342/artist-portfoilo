@@ -49,14 +49,30 @@ const EditPainting = () => {
             category: paintingCategory
         };
 
-        // Save to localStorage
-        const existingPaintings = JSON.parse(localStorage.getItem('gallery')) || [];
-        const updatedPaintings = existingPaintings.map(p =>
-            p.id === painting.id ? updatedPainting : p
-        );
-        localStorage.setItem('gallery', JSON.stringify(updatedPaintings));
+        // Save to backend
+        const updateArtwork = async () => {
+            try {
+                const response = await fetch(`http://localhost:5000/api/artworks/${painting._id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                    },
+                    body: JSON.stringify(updatedPainting)
+                });
 
-        setShowSuccess(true);
+                if (response.ok) {
+                    setShowSuccess(true);
+                } else {
+                    alert('Error updating painting');
+                }
+            } catch (error) {
+                console.error('Error updating painting:', error);
+                alert('Error updating painting');
+            }
+        };
+
+        updateArtwork();
 
         // Reset success message after 2 seconds
         setTimeout(() => {
@@ -116,7 +132,7 @@ const EditPainting = () => {
                                 <label className="image-upload-label">
                                     {selectedImage ? (
                                         <div className="image-preview">
-                                            <img src={selectedImage} alt="Preview" />
+                                            <img src={selectedImage.startsWith('http') ? selectedImage : `http://localhost:5000${selectedImage}`} alt="Preview" />
                                             <button type="button" className="remove-image" onClick={() => setSelectedImage(null)}>
                                                 <i className="fas fa-times"></i>
                                             </button>

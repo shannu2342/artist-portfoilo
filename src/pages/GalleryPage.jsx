@@ -35,7 +35,7 @@ const GalleryPage = ({ gallery, whatsAppNumber }) => {
                     <div className="gallery-grid">
                         {gallery.map((artwork) => (
                             <ArtworkCard
-                                key={artwork.id}
+                                key={artwork._id}
                                 artwork={artwork}
                                 onWhatsAppClick={handleWhatsAppClick}
                                 onViewClick={handleViewClick}
