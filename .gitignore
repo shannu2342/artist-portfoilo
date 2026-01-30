@@ -8,4 +8,5 @@ dist/
 build/
 backend/public/
 images/
-screenshot.png  
+screenshot.png
+backend/package-lock.json  
