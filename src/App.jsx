@@ -34,15 +34,12 @@ const App = () => {
             setWhatsAppNumber(savedNumber);
         }
 
-        const savedGallery = localStorage.getItem('gallery');
-        if (savedGallery) {
-            setGallery(JSON.parse(savedGallery));
-        } else {
-            // Initialize with empty gallery
-            const initialGallery = [];
-            setGallery(initialGallery);
-            localStorage.setItem('gallery', JSON.stringify(initialGallery));
-        }
+        // Clear existing gallery data from localStorage to remove demo images
+        localStorage.removeItem('gallery');
+        // Initialize with empty gallery
+        const initialGallery = [];
+        setGallery(initialGallery);
+        localStorage.setItem('gallery', JSON.stringify(initialGallery));
 
         const savedServices = localStorage.getItem('services');
         if (savedServices) {
