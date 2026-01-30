@@ -1,5 +1,6 @@
 import React from 'react';
 import './ArtworkCard.css';
+import watermarkLogo from '../assets/logo2-removebg-preview.png';
 
 const ArtworkCard = ({ artwork, onWhatsAppClick, onViewClick }) => {
     const handleContextMenu = (e) => {
@@ -24,7 +25,7 @@ const ArtworkCard = ({ artwork, onWhatsAppClick, onViewClick }) => {
                     draggable={false}
                 />
                 <div className="watermark-overlay">
-                    <i className="fas fa-copyright"></i>
+                    <img src={watermarkLogo} alt="Watermark logo" className="watermark-logo" />
                 </div>
                 <div className="artwork-overlay">
                     <button
