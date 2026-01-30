@@ -32,10 +32,10 @@
 
 .watermark-overlay {
     position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    width: 84px;
-    height: 84px;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    width: 72px;
+    height: 72px;
     background: transparent;
     border-radius: 0;
     display: flex;
@@ -52,6 +52,22 @@
     object-fit: contain;
     display: block;
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6)) saturate(1.15);
+}
+
+@media (max-width: 768px) {
+    .watermark-overlay {
+        bottom: 0.5rem;
+        right: 0.5rem;
+        width: 56px;
+        height: 56px;
+    }
+}
+
+@media (max-width: 480px) {
+    .watermark-overlay {
+        width: 48px;
+        height: 48px;
+    }
 }
 
 .artwork-overlay {
