@@ -5,4 +5,7 @@ backend/.env
 .DS_Store
 *.log
 dist/
-build/  
+build/
+backend/public/
+images/
+screenshot.png  
