@@ -13,17 +13,25 @@ const ArtworkCard = ({ artwork, onWhatsAppClick, onViewClick }) => {
         return false;
     };
 
+    const images = artwork.images || [artwork.image];
+
     return (
         <div className="artwork-card">
             <div className="artwork-image-container">
                 <img
-                    src={`http://localhost:5000${artwork.image}`}
+                    src={`http://localhost:5000${images[0]}`}
                     alt={artwork.title}
                     className="artwork-image"
                     onContextMenu={handleContextMenu}
                     onDragStart={handleDragStart}
                     draggable={false}
                 />
+                {images.length > 1 && (
+                    <div className="multiple-images-indicator">
+                        <i className="fas fa-images"></i>
+                        <span>{images.length} images</span>
+                    </div>
+                )}
                 <div className="watermark-overlay">
                     <img src={watermarkLogo} alt="Watermark logo" className="watermark-logo" />
                 </div>

@@ -106,7 +106,7 @@ const ManagePaintings = ({ gallery, onDeleteArtwork, onUpdateArtwork }) => {
                             filteredPaintings.map(painting => (
                                 <div key={painting._id} className="painting-card">
                                     <div className="painting-image">
-                                        <img src={`http://localhost:5000${painting.image}`} alt={painting.title} />
+                                        <img src={`http://localhost:5000${painting.images ? painting.images[0] : painting.image}`} alt={painting.title} />
                                         {painting.category && (
                                             <div className={`category-badge ${painting.category}`}>
                                                 {painting.category.charAt(0).toUpperCase() + painting.category.slice(1)}

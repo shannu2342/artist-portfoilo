@@ -4,25 +4,27 @@ import './AddPainting.css';
 
 const AddPainting = () => {
     const navigate = useNavigate();
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImages, setSelectedImages] = useState([]);
     const [paintingName, setPaintingName] = useState('');
     const [paintingDescription, setPaintingDescription] = useState('');
     const [paintingCategory, setPaintingCategory] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
 
     const handleImageSelect = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            setSelectedImage(imageUrl);
-        }
+        const files = Array.from(e.target.files);
+        const newImages = files.map(file => URL.createObjectURL(file));
+        setSelectedImages(prev => [...prev, ...newImages]);
+    };
+
+    const handleRemoveImage = (index) => {
+        setSelectedImages(prev => prev.filter((_, i) => i !== index));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!selectedImage || !paintingName) {
-            alert('Please select an image and enter a painting name');
+        if (selectedImages.length === 0 || !paintingName) {
+            alert('Please select at least one image and enter a painting name');
             return;
         }
 
@@ -30,7 +32,7 @@ const AddPainting = () => {
             id: Date.now(),
             title: paintingName,
             description: paintingDescription,
-            image: selectedImage,
+            images: selectedImages,
             category: paintingCategory
         };
 
@@ -43,7 +45,7 @@ const AddPainting = () => {
 
         // Reset form
         setTimeout(() => {
-            setSelectedImage(null);
+            setSelectedImages([]);
             setPaintingName('');
             setPaintingDescription('');
             setPaintingCategory('');
@@ -99,18 +101,26 @@ const AddPainting = () => {
                             </div>
                             <div className="image-upload-section">
                                 <label className="image-upload-label">
-                                    {selectedImage ? (
-                                        <div className="image-preview">
-                                            <img src={selectedImage} alt="Preview" />
-                                            <button type="button" className="remove-image" onClick={() => setSelectedImage(null)}>
-                                                <i className="fas fa-times"></i>
-                                            </button>
+                                    {selectedImages.length > 0 ? (
+                                        <div className="image-previews">
+                                            {selectedImages.map((image, index) => (
+                                                <div key={index} className="image-preview">
+                                                    <img src={image} alt={`Preview ${index + 1}`} />
+                                                    <button
+                                                        type="button"
+                                                        className="remove-image"
+                                                        onClick={() => handleRemoveImage(index)}
+                                                    >
+                                                        <i className="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            ))}
                                         </div>
                                     ) : (
                                         <div className="upload-placeholder">
                                             <i className="fas fa-cloud-upload-alt"></i>
-                                            <p>Click to select image</p>
-                                            <span>Supports JPG, PNG, GIF up to 10MB</span>
+                                            <p>Click to select images</p>
+                                            <span>Supports JPG, PNG, GIF up to 10MB (multiple files allowed)</span>
                                         </div>
                                     )}
                                     <input
@@ -118,6 +128,7 @@ const AddPainting = () => {
                                         accept="image/*"
                                         onChange={handleImageSelect}
                                         style={{ display: 'none' }}
+                                        multiple
                                     />
                                 </label>
                             </div>

@@ -54,6 +54,27 @@
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6)) saturate(1.15);
 }
 
+.multiple-images-indicator {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    z-index: 15;
+    backdrop-filter: blur(10px);
+}
+
+.multiple-images-indicator i {
+    font-size: 1rem;
+}
+
 @media (max-width: 768px) {
     .watermark-overlay {
         bottom: 0.5rem;

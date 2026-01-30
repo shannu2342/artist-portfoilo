@@ -6,7 +6,7 @@ const EditPainting = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [painting, setPainting] = useState(null);
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImages, setSelectedImages] = useState([]);
     const [paintingName, setPaintingName] = useState('');
     const [paintingDescription, setPaintingDescription] = useState('');
     const [paintingCategory, setPaintingCategory] = useState('');
@@ -16,7 +16,7 @@ const EditPainting = () => {
         if (location.state && location.state.painting) {
             const { painting: initialPainting } = location.state;
             setPainting(initialPainting);
-            setSelectedImage(initialPainting.image);
+            setSelectedImages(initialPainting.images || [initialPainting.image]);
             setPaintingName(initialPainting.title);
             setPaintingDescription(initialPainting.description);
             setPaintingCategory(initialPainting.category);
@@ -26,18 +26,20 @@ const EditPainting = () => {
     }, [location, navigate]);
 
     const handleImageSelect = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            setSelectedImage(imageUrl);
-        }
+        const files = Array.from(e.target.files);
+        const newImages = files.map(file => URL.createObjectURL(file));
+        setSelectedImages(prev => [...prev, ...newImages]);
+    };
+
+    const handleRemoveImage = (index) => {
+        setSelectedImages(prev => prev.filter((_, i) => i !== index));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!selectedImage || !paintingName) {
-            alert('Please select an image and enter a painting name');
+        if (selectedImages.length === 0 || !paintingName) {
+            alert('Please select at least one image and enter a painting name');
             return;
         }
 
@@ -45,7 +47,7 @@ const EditPainting = () => {
             ...painting,
             title: paintingName,
             description: paintingDescription,
-            image: selectedImage,
+            images: selectedImages,
             category: paintingCategory
         };
 
@@ -130,18 +132,29 @@ const EditPainting = () => {
                             </div>
                             <div className="image-upload-section">
                                 <label className="image-upload-label">
-                                    {selectedImage ? (
-                                        <div className="image-preview">
-                                            <img src={selectedImage.startsWith('http') ? selectedImage : `http://localhost:5000${selectedImage}`} alt="Preview" />
-                                            <button type="button" className="remove-image" onClick={() => setSelectedImage(null)}>
-                                                <i className="fas fa-times"></i>
-                                            </button>
+                                    {selectedImages.length > 0 ? (
+                                        <div className="image-previews">
+                                            {selectedImages.map((image, index) => (
+                                                <div key={index} className="image-preview">
+                                                    <img
+                                                        src={image.startsWith('http') ? image : `http://localhost:5000${image}`}
+                                                        alt={`Preview ${index + 1}`}
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        className="remove-image"
+                                                        onClick={() => handleRemoveImage(index)}
+                                                    >
+                                                        <i className="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            ))}
                                         </div>
                                     ) : (
                                         <div className="upload-placeholder">
                                             <i className="fas fa-cloud-upload-alt"></i>
-                                            <p>Click to select image</p>
-                                            <span>Supports JPG, PNG, GIF up to 10MB</span>
+                                            <p>Click to select images</p>
+                                            <span>Supports JPG, PNG, GIF up to 10MB (multiple files allowed)</span>
                                         </div>
                                     )}
                                     <input
@@ -149,6 +162,7 @@ const EditPainting = () => {
                                         accept="image/*"
                                         onChange={handleImageSelect}
                                         style={{ display: 'none' }}
+                                        multiple
                                     />
                                 </label>
                             </div>

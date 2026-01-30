@@ -6,13 +6,13 @@ export const listArtworks = async (req, res) => {
 };
 
 export const createArtwork = async (req, res) => {
-  const { title, description, image, category = 'general', price = '' } = req.body || {};
+  const { title, description, images, category = 'general', price = '' } = req.body || {};
 
-  if (!title || !description || !image) {
-    return res.status(400).json({ message: 'Title, description, and image are required' });
+  if (!title || !description || !images || images.length === 0) {
+    return res.status(400).json({ message: 'Title, description, and at least one image are required' });
   }
 
-  const artwork = await Artwork.create({ title, description, image, category, price });
+  const artwork = await Artwork.create({ title, description, images, category, price });
   return res.status(201).json(artwork);
 };
 

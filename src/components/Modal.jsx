@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import './Modal.css';
+import ImageSlideshow from './ImageSlideshow';
 
 const Modal = ({ isOpen, onClose, artwork, onWhatsAppClick }) => {
     useEffect(() => {
@@ -26,17 +27,9 @@ const Modal = ({ isOpen, onClose, artwork, onWhatsAppClick }) => {
         }
     };
 
-    const handleContextMenu = (e) => {
-        e.preventDefault();
-        return false;
-    };
-
-    const handleDragStart = (e) => {
-        e.preventDefault();
-        return false;
-    };
-
     if (!isOpen || !artwork) return null;
+
+    const images = artwork.images || [artwork.image];
 
     return (
         <div className="modal-overlay" onClick={handleOverlayClick}>
@@ -47,17 +40,7 @@ const Modal = ({ isOpen, onClose, artwork, onWhatsAppClick }) => {
 
                 <div className="modal-body">
                     <div className="modal-image-container">
-                        <img
-                            src={`http://localhost:5000${artwork.image}`}
-                            alt={artwork.title}
-                            className="modal-image"
-                            onContextMenu={handleContextMenu}
-                            onDragStart={handleDragStart}
-                            draggable={false}
-                        />
-                        <div className="modal-watermark">
-                            <i className="fas fa-copyright"></i>
-                        </div>
+                        <ImageSlideshow images={images} alt={artwork.title} />
                     </div>
 
                     <div className="modal-info">
