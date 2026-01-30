@@ -35,7 +35,7 @@ const EditPainting = () => {
         setSelectedImages(prev => prev.filter((_, i) => i !== index));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (selectedImages.length === 0 || !paintingName) {
@@ -43,43 +43,40 @@ const EditPainting = () => {
             return;
         }
 
-        const updatedPainting = {
-            ...painting,
-            title: paintingName,
-            description: paintingDescription,
-            images: selectedImages,
-            category: paintingCategory
-        };
+        const formData = new FormData();
+        formData.append('title', paintingName);
+        formData.append('description', paintingDescription);
+        formData.append('category', paintingCategory);
 
-        // Save to backend
-        const updateArtwork = async () => {
-            try {
-                const response = await fetch(`http://localhost:5000/api/artworks/${painting._id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
-                    },
-                    body: JSON.stringify(updatedPainting)
-                });
+        // Append new files to FormData
+        const files = Array.from(document.getElementById('imageInput').files);
+        files.forEach(file => {
+            formData.append('images', file);
+        });
 
-                if (response.ok) {
-                    setShowSuccess(true);
-                } else {
-                    alert('Error updating painting');
-                }
-            } catch (error) {
-                console.error('Error updating painting:', error);
+        try {
+            const response = await fetch(`http://localhost:5000/api/artworks/${painting._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                setShowSuccess(true);
+
+                // Reset success message after 2 seconds
+                setTimeout(() => {
+                    setShowSuccess(false);
+                }, 2000);
+            } else {
                 alert('Error updating painting');
             }
-        };
-
-        updateArtwork();
-
-        // Reset success message after 2 seconds
-        setTimeout(() => {
-            setShowSuccess(false);
-        }, 2000);
+        } catch (error) {
+            console.error('Error updating painting:', error);
+            alert('Error updating painting');
+        }
     };
 
     const handleBack = () => {
@@ -159,6 +156,7 @@ const EditPainting = () => {
                                     )}
                                     <input
                                         type="file"
+                                        id="imageInput"
                                         accept="image/*"
                                         onChange={handleImageSelect}
                                         style={{ display: 'none' }}

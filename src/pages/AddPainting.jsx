@@ -20,7 +20,7 @@ const AddPainting = () => {
         setSelectedImages(prev => prev.filter((_, i) => i !== index));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (selectedImages.length === 0 || !paintingName) {
@@ -28,29 +28,44 @@ const AddPainting = () => {
             return;
         }
 
-        const newPainting = {
-            id: Date.now(),
-            title: paintingName,
-            description: paintingDescription,
-            images: selectedImages,
-            category: paintingCategory
-        };
+        const formData = new FormData();
+        formData.append('title', paintingName);
+        formData.append('description', paintingDescription);
+        formData.append('category', paintingCategory);
 
-        // Save to localStorage
-        const existingPaintings = JSON.parse(localStorage.getItem('gallery')) || [];
-        const updatedPaintings = [...existingPaintings, newPainting];
-        localStorage.setItem('gallery', JSON.stringify(updatedPaintings));
+        // Append files to FormData
+        const files = Array.from(document.getElementById('imageInput').files);
+        files.forEach(file => {
+            formData.append('images', file);
+        });
 
-        setShowSuccess(true);
+        try {
+            const response = await fetch('http://localhost:5000/api/artworks', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                },
+                body: formData
+            });
 
-        // Reset form
-        setTimeout(() => {
-            setSelectedImages([]);
-            setPaintingName('');
-            setPaintingDescription('');
-            setPaintingCategory('');
-            setShowSuccess(false);
-        }, 2000);
+            if (response.ok) {
+                setShowSuccess(true);
+
+                // Reset form
+                setTimeout(() => {
+                    setSelectedImages([]);
+                    setPaintingName('');
+                    setPaintingDescription('');
+                    setPaintingCategory('');
+                    setShowSuccess(false);
+                }, 2000);
+            } else {
+                alert('Error uploading painting');
+            }
+        } catch (error) {
+            console.error('Error uploading painting:', error);
+            alert('Error uploading painting');
+        }
     };
 
     const handleBack = () => {
@@ -125,6 +140,7 @@ const AddPainting = () => {
                                     )}
                                     <input
                                         type="file"
+                                        id="imageInput"
                                         accept="image/*"
                                         onChange={handleImageSelect}
                                         style={{ display: 'none' }}
