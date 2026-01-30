@@ -40,10 +40,8 @@
 }
 
 .logo-img {
-    width: 140px;
     height: 36px;
-    object-fit: cover;
-    object-position: left center;
+    width: auto;
     margin-right: 0.5rem;
     display: block;
 }
@@ -122,8 +120,8 @@
 
 @media (max-width: 768px) {
     .logo-img {
-        width: 120px;
         height: 32px;
+        width: auto;
     }
 
     .nav-menu {

@@ -30,7 +30,6 @@ const Navbar = () => {
             <div className="container">
                 <Link to="/" className="logo" onClick={handleNavClick}>
                     <img src={logo} alt="Aurexon" className="logo-img" />
-                    <span>Aurexon</span>
                 </Link>
 
                 <div className={`nav-menu ${isMenuOpen ? 'active' : ''}`} id="navMenu">
