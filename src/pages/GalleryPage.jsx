@@ -5,16 +5,6 @@ import './GalleryPage.css';
 
 const GalleryPage = ({ gallery, whatsAppNumber }) => {
     const [selectedArtwork, setSelectedArtwork] = useState(null);
-    const [filter, setFilter] = useState('all');
-
-    // Mock filter options
-    const filters = [
-        { id: 'all', label: 'All Artworks' },
-        { id: 'acrylic', label: 'Acrylic' },
-        { id: 'oil', label: 'Oil Paintings' },
-        { id: 'watercolor', label: 'Watercolor' },
-        { id: 'digital', label: 'Digital Art' }
-    ];
 
     const handleWhatsAppClick = (artwork) => {
         const message = encodeURIComponent(`Hello, I'm interested in the painting titled "${artwork.title}". Please share the price and details.`);
@@ -36,22 +26,6 @@ const GalleryPage = ({ gallery, whatsAppNumber }) => {
                     <div className="gallery-hero-content">
                         <h1>Art Gallery</h1>
                         <p>Explore my collection of beautiful artworks</p>
-                    </div>
-                </div>
-            </section>
-
-            <section className="gallery-filter-section">
-                <div className="container">
-                    <div className="filter-tabs">
-                        {filters.map((filterOption) => (
-                            <button
-                                key={filterOption.id}
-                                className={`filter-tab ${filter === filterOption.id ? 'active' : ''}`}
-                                onClick={() => setFilter(filterOption.id)}
-                            >
-                                {filterOption.label}
-                            </button>
-                        ))}
                     </div>
                 </div>
             </section>

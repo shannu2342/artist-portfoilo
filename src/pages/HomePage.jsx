@@ -1,12 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ArtworkCard from '../components/ArtworkCard';
 import Modal from '../components/Modal';
 import './HomePage.css';
+import heroImage1 from '../assets/image1.jpeg';
+import heroImage2 from '../assets/image2.jpeg';
+import heroImage3 from '../assets/image3.jpeg';
 
 const HomePage = ({ gallery, whatsAppNumber }) => {
     const [selectedArtwork, setSelectedArtwork] = useState(null);
     const featuredArtworks = gallery.slice(0, 6);
+    const heroTrackRef = useRef(null);
+    const heroSlides = [heroImage1, heroImage2, heroImage3];
+    const heroIndexRef = useRef(0);
+
+    useEffect(() => {
+        const track = heroTrackRef.current;
+        if (!track) return;
+
+        const slideCount = heroSlides.length;
+        const scrollToIndex = (index) => {
+            const width = track.clientWidth;
+            track.scrollTo({ left: width * index, behavior: 'smooth' });
+        };
+
+        const interval = setInterval(() => {
+            heroIndexRef.current = (heroIndexRef.current + 1) % slideCount;
+            scrollToIndex(heroIndexRef.current);
+        }, 4000);
+
+        return () => clearInterval(interval);
+    }, [heroSlides.length]);
 
     const handleWhatsAppClick = (artwork) => {
         const message = encodeURIComponent(`Hello, I'm interested in the painting titled "${artwork.title}". Please share the price and details.`);
@@ -24,33 +48,64 @@ const HomePage = ({ gallery, whatsAppNumber }) => {
     return (
         <div className="home-page">
             <section className="hero">
-                <div className="container">
-                    <div className="hero-content">
-                        <div className="hero-text">
-                            <h1>
-                                <span className="hero-greeting">Welcome to</span>
-                                <span className="hero-name">Aurexon</span>
-                            </h1>
-                            <p className="hero-tagline">
-                                Creating Beyond the Canvas
-                            </p>
-                            <div className="hero-actions">
-                                <Link to="/gallery" className="btn btn-primary">
-                                    <i className="fas fa-images"></i>
-                                    Explore Gallery
-                                </Link>
-                                <button
-                                    className="btn btn-whatsapp"
-                                    onClick={() => {
-                                        const message = encodeURIComponent('Hello! I saw your art portfolio and would like to learn more about your beautiful paintings.');
-                                        window.open(`https://wa.me/${whatsAppNumber}?text=${message}`, '_blank');
-                                    }}
-                                >
-                                    <i className="fab fa-whatsapp"></i>
-                                    Contact Now
-                                </button>
+                <div className="hero-slider">
+                    <div className="hero-track" ref={heroTrackRef}>
+                        {heroSlides.map((image, index) => (
+                            <div className="hero-slide" key={image}>
+                                <img src={image} alt={`Hero ${index + 1}`} />
+                                <div className="hero-overlay">
+                                    <div className="hero-text">
+                                        <h1>
+                                            <span className="hero-greeting">Welcome to</span>
+                                            <span className="hero-name">Aurexon</span>
+                                        </h1>
+                                        <p className="hero-tagline">Creating Beyond the Canvas</p>
+                                        <div className="hero-actions">
+                                            <Link to="/gallery" className="btn btn-primary">
+                                                <i className="fas fa-images"></i>
+                                                Explore Gallery
+                                            </Link>
+                                            <button
+                                                className="btn btn-whatsapp"
+                                                onClick={() => {
+                                                    const message = encodeURIComponent('Hello! I saw your art portfolio and would like to learn more about your beautiful paintings.');
+                                                    window.open(`https://wa.me/${whatsAppNumber}?text=${message}`, '_blank');
+                                                }}
+                                            >
+                                                <i className="fab fa-whatsapp"></i>
+                                                Contact Now
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        ))}
+                    </div>
+                    <div className="hero-controls">
+                        <button
+                            className="hero-control"
+                            aria-label="Previous slide"
+                            onClick={() => {
+                                const track = heroTrackRef.current;
+                                if (!track) return;
+                                heroIndexRef.current = (heroIndexRef.current - 1 + heroSlides.length) % heroSlides.length;
+                                track.scrollTo({ left: track.clientWidth * heroIndexRef.current, behavior: 'smooth' });
+                            }}
+                        >
+                            <i className="fas fa-chevron-left"></i>
+                        </button>
+                        <button
+                            className="hero-control"
+                            aria-label="Next slide"
+                            onClick={() => {
+                                const track = heroTrackRef.current;
+                                if (!track) return;
+                                heroIndexRef.current = (heroIndexRef.current + 1) % heroSlides.length;
+                                track.scrollTo({ left: track.clientWidth * heroIndexRef.current, behavior: 'smooth' });
+                            }}
+                        >
+                            <i className="fas fa-chevron-right"></i>
+                        </button>
                     </div>
                 </div>
             </section>
