@@ -15,7 +15,7 @@
     background: #ffffff;
     border-radius: 28px;
     width: min(1300px, 96vw);
-    max-height: 90vh;
+    max-height: 92vh;
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
 }
@@ -47,7 +47,7 @@
 .modal-body {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: minmax(0, 1fr) auto;
     min-height: min(78vh, 720px);
 }
 
@@ -71,6 +71,17 @@
     background: #ffffff;
     width: 100%;
     height: 100%;
+}
+
+.modal-image-container .watermark-overlay {
+    right: 18px;
+    bottom: 18px;
+    z-index: 6;
+}
+
+.modal-image-container .watermark-logo {
+    width: 72px;
+    height: 72px;
 }
 
 .modal-info {
@@ -142,6 +153,38 @@
 
     .modal-whatsapp-btn {
         width: 100%;
+    }
+}
+
+@media (min-width: 1000px) {
+    .modal-content {
+        width: min(1400px, 94vw);
+    }
+
+    .modal-body {
+        min-height: min(86vh, 860px);
+    }
+
+    .modal-image-container {
+        min-height: clamp(420px, 65vh, 760px);
+    }
+
+    .modal-info {
+        padding: 1.25rem 2rem 1.6rem;
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+    }
+
+    .modal-description {
+        font-size: 0.95rem;
+        line-height: 1.65;
+    }
+
+    .modal-whatsapp-btn {
+        font-size: 0.95rem;
+        padding: 0.7rem 1.5rem;
     }
 }
 
