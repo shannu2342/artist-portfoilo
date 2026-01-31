@@ -119,17 +119,17 @@
 
 .watermark-overlay {
     position: absolute;
-    bottom: 16px;
-    right: 16px;
+    bottom: 24px;
+    right: 24px;
     left: auto;
     z-index: 5;
-    opacity: 0.8;
+    opacity: 0.9;
     pointer-events: none;
 }
 
 .watermark-logo {
-    width: 72px;
-    height: 72px;
+    width: 80px;
+    height: 80px;
     object-fit: contain;
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6)) saturate(1.15);
 }
