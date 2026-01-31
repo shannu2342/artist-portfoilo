@@ -21,6 +21,34 @@ const ManagePaintings = ({ gallery, onDeleteArtwork, onUpdateArtwork }) => {
         return matchesSearch;
     });
 
+    const orderedPaintings = [...filteredPaintings].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
+    const applyOrderChange = (paintingId, newPosition) => {
+        const list = [...paintings].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+        const currentIndex = list.findIndex(p => p._id === paintingId);
+        if (currentIndex === -1) return;
+
+        const targetIndex = Math.max(0, Math.min(list.length - 1, newPosition - 1));
+        if (targetIndex === currentIndex) return;
+
+        const [moved] = list.splice(currentIndex, 1);
+        list.splice(targetIndex, 0, moved);
+
+        const previousOrder = new Map(paintings.map(item => [item._id, item.order ?? 0]));
+        const updatedList = list.map((item, index) => ({
+            ...item,
+            order: index + 1
+        }));
+
+        setPaintings(updatedList);
+
+        updatedList.forEach((item) => {
+            if (previousOrder.get(item._id) !== item.order) {
+                onUpdateArtwork(item._id, { order: item.order });
+            }
+        });
+    };
+
     const handleDeleteClick = (painting) => {
         setSelectedPainting(painting);
         setShowDeleteConfirm(true);
@@ -40,10 +68,10 @@ const ManagePaintings = ({ gallery, onDeleteArtwork, onUpdateArtwork }) => {
 
     const movePainting = (index, direction) => {
         const targetIndex = index + direction;
-        if (targetIndex < 0 || targetIndex >= filteredPaintings.length) return;
+        if (targetIndex < 0 || targetIndex >= orderedPaintings.length) return;
 
-        const current = filteredPaintings[index];
-        const target = filteredPaintings[targetIndex];
+        const current = orderedPaintings[index];
+        const target = orderedPaintings[targetIndex];
 
         const currentOrder = current.order ?? 0;
         const targetOrder = target.order ?? 0;
@@ -105,7 +133,7 @@ const ManagePaintings = ({ gallery, onDeleteArtwork, onUpdateArtwork }) => {
                                 <p>Try adjusting your search or filter</p>
                             </div>
                         ) : (
-                            filteredPaintings.map((painting, index) => (
+                            orderedPaintings.map((painting, index) => (
                                 <div key={painting._id} className="painting-card">
                                     <div className="painting-image">
                                         <img
@@ -122,6 +150,19 @@ const ManagePaintings = ({ gallery, onDeleteArtwork, onUpdateArtwork }) => {
                                     <div className="painting-info">
                                         <h3 className="painting-title">{painting.title}</h3>
                                         <p className="painting-description">{painting.description}</p>
+                                        <div className="painting-order">
+                                            <span>Order</span>
+                                            <input
+                                                type="number"
+                                                min="1"
+                                                max={orderedPaintings.length}
+                                                defaultValue={index + 1}
+                                                onBlur={(e) => {
+                                                    const value = Number(e.target.value || index + 1);
+                                                    applyOrderChange(painting._id, value);
+                                                }}
+                                            />
+                                        </div>
                                     </div>
                                     <div className="painting-actions">
                                         <button
