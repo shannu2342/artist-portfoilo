@@ -149,11 +149,12 @@
     transform: translateY(-50%);
     color: var(--text-light);
     font-size: 1rem;
+    pointer-events: none;
 }
 
 .input-group input {
     width: 100%;
-    padding: 1rem 3rem 1rem 3rem;
+    padding: 1rem 3.5rem 1rem 3rem;
     border: 2px solid var(--border-color);
     border-radius: 12px;
     font-family: inherit;
