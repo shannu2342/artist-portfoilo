@@ -15,7 +15,7 @@
     background: #ffffff;
     border-radius: 28px;
     width: min(1300px, 96vw);
-    max-height: 92vh;
+    max-height: 90vh;
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
 }
@@ -48,7 +48,7 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: minmax(0, 1fr) auto;
-    min-height: min(78vh, 720px);
+    min-height: min(70vh, 680px);
 }
 
 .modal-image-container {
@@ -162,11 +162,11 @@
     }
 
     .modal-body {
-        min-height: min(86vh, 860px);
+        min-height: min(78vh, 760px);
     }
 
     .modal-image-container {
-        min-height: clamp(420px, 65vh, 760px);
+        min-height: clamp(360px, 55vh, 620px);
     }
 
     .modal-info {
