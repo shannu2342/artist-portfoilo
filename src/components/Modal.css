@@ -165,11 +165,11 @@
 
 @media (min-width: 900px) {
     .modal-content {
-        max-width: 1100px;
+        max-width: 1200px;
     }
 
     .modal-body {
-        grid-template-columns: 1.1fr 0.9fr;
+        grid-template-columns: 1.4fr 0.6fr;
     }
 
     .modal-image-container {
