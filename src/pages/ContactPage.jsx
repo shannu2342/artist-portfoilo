@@ -194,18 +194,6 @@ const ContactPage = ({ whatsAppNumber }) => {
                     </div>
                 </div>
             </section>
-
-            <section className="map-section">
-                <div className="container">
-                    <h2>Find Me</h2>
-                    <div className="map-container">
-                        <div className="map-placeholder">
-                            <i className="fas fa-map-marked-alt"></i>
-                            <p>Google Map Integration</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
         </div>
     );
 };
