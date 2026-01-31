@@ -37,6 +37,7 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    object-position: center;
 }
 
 .hero-overlay {
@@ -125,7 +126,7 @@
     }
 
     .hero-slide {
-        height: calc(60vh - 90px);
+        height: calc(70vh - 90px);
     }
 
     .hero-overlay {
