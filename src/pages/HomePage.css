@@ -30,14 +30,16 @@
     min-width: 100%;
     height: calc(70vh - 72px);
     scroll-snap-align: start;
+    overflow: hidden;
 }
 
 .hero-slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
     object-position: center;
+    background: #000;
 }
 
 .hero-overlay {
@@ -127,6 +129,16 @@
 
     .hero-slide {
         height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hero-slide img {
+        width: auto;
+        height: 100%;
+        max-width: 100%;
+        object-fit: contain;
     }
 
     .hero-overlay {
