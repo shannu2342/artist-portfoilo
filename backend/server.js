@@ -8,6 +8,8 @@ import artworkRoutes from './routes/artworkRoutes.js';
 import contentRoutes from './routes/contentRoutes.js';
 import fileRoutes from './routes/fileRoutes.js';
 import path from 'path';
+import bcrypt from 'bcryptjs';
+import Admin from './models/Admin.js';
 
 dotenv.config();
 
@@ -57,6 +59,16 @@ app.use((err, req, res, next) => {
 const start = async () => {
   try {
     await connectDB();
+    const email = process.env.ADMIN_EMAIL;
+    const password = process.env.ADMIN_PASSWORD;
+    if (email && password) {
+      const existing = await Admin.findOne({ email: email.toLowerCase().trim() });
+      if (!existing) {
+        const passwordHash = await bcrypt.hash(password, 10);
+        await Admin.create({ email: email.toLowerCase().trim(), passwordHash });
+        console.log('Admin user created from env');
+      }
+    }
     app.listen(port, () => {
       console.log(`API running on port ${port}`);
     });
