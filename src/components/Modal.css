@@ -166,22 +166,22 @@
 
 @media (min-width: 900px) {
     .modal-content {
-        max-width: 1800px;
-        max-height: 75vh;
-        width: auto;
-        height: auto;
+        max-width: 95vw;
+        max-height: 85vh;
+        width: 95vw;
+        height: 85vh;
     }
 
     .modal-body {
-        grid-template-columns: 2.5fr 0.7fr;
+        grid-template-columns: 3fr 0.5fr;
         min-height: auto;
-        height: auto;
+        height: 100%;
         display: grid;
     }
 
     .modal-image-container {
-        min-height: 500px;
-        height: auto;
+        min-height: auto;
+        height: 100%;
         padding: 0;
     }
 
@@ -199,27 +199,27 @@
     }
 
     .modal-info {
-        padding: 1.25rem 1.75rem;
+        padding: 1rem 1.5rem;
     }
 
     .modal-title {
-        font-size: 1.5rem;
-        margin-bottom: 0.875rem;
+        font-size: 1.4rem;
+        margin-bottom: 0.75rem;
     }
 
     .modal-description {
-        font-size: 0.9rem;
-        line-height: 1.4;
-        margin-bottom: 1rem;
+        font-size: 0.85rem;
+        line-height: 1.3;
+        margin-bottom: 0.875rem;
     }
 
     .modal-whatsapp-btn {
-        padding: 0.75rem 1.125rem;
-        font-size: 0.9rem;
+        padding: 0.625rem 1rem;
+        font-size: 0.85rem;
     }
 
     .modal-whatsapp-btn i {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 }
 

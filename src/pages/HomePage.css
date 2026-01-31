@@ -126,40 +126,40 @@
     }
 
     .hero-slide {
-        height: 90vh;
+        height: 100vh;
     }
 
     .hero-overlay {
-        padding: 8rem 4rem 6rem;
+        padding: 10rem 5rem 8rem;
     }
 
     .hero-greeting {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
     }
 
     .hero-name {
-        font-size: 5.5rem;
-        margin-bottom: 2rem;
+        font-size: 6.5rem;
+        margin-bottom: 2.5rem;
     }
 
     .hero-tagline {
-        font-size: 1.5rem;
-        margin-bottom: 3.5rem;
+        font-size: 1.75rem;
+        margin-bottom: 4rem;
     }
 
     .hero-actions {
-        gap: 2.5rem;
+        gap: 3rem;
     }
 
     .hero-actions .btn {
-        padding: 1.5rem 3rem;
-        font-size: 1.2rem;
+        padding: 1.75rem 3.5rem;
+        font-size: 1.3rem;
     }
 
     .hero-control {
-        width: 55px;
-        height: 55px;
-        font-size: 1.3rem;
+        width: 60px;
+        height: 60px;
+        font-size: 1.4rem;
     }
 }
 
