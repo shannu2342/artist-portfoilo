@@ -173,7 +173,7 @@
     }
 
     .modal-body {
-        grid-template-columns: 5fr 1fr;
+        grid-template-columns: 2fr 1fr;
         min-height: auto;
         height: 100%;
         display: grid;
@@ -208,7 +208,10 @@
     .modal-info {
         padding: 2.5rem;
         background: var(--bg-white);
-        overflow-y: auto;
+        overflow-y: visible;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .modal-title {
