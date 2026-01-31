@@ -243,6 +243,26 @@ const App = () => {
         }
     };
 
+    const deleteHeroImage = async (image) => {
+        try {
+            const response = await fetch(apiUrl('/api/content/hero-images'), {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                },
+                body: JSON.stringify({ image })
+            });
+
+            if (response.ok) {
+                const updated = await response.json();
+                setHeroImages(Array.isArray(updated.heroImages) ? updated.heroImages : []);
+            }
+        } catch (error) {
+            console.error('Error deleting hero image:', error);
+        }
+    };
+
     const updateArtistProfile = async (formData) => {
         try {
             const response = await fetch(apiUrl('/api/content/artist-profile'), {
@@ -378,6 +398,7 @@ const App = () => {
                         <EditHero
                             heroImages={heroImages}
                             onUpdateHeroImages={updateHeroImages}
+                            onDeleteHeroImage={deleteHeroImage}
                         />
                     } />
                     <Route path="/admin/edit-profile" element={

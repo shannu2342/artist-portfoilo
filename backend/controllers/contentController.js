@@ -45,6 +45,20 @@ export const updateHeroImages = async (req, res) => {
   return res.json(content);
 };
 
+export const deleteHeroImage = async (req, res) => {
+  const content = await getOrCreateContent();
+  const { image } = req.body || {};
+
+  if (!image) {
+    return res.status(400).json({ message: 'Image path required' });
+  }
+
+  content.heroImages = (content.heroImages || []).filter(img => img !== image);
+  await content.save();
+
+  return res.json(content);
+};
+
 export const updateArtistProfile = async (req, res) => {
   const content = await getOrCreateContent();
   const { name, bio } = req.body || {};

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './EditHero.css';
 import { resolveImageUrl } from '../utils/api';
 
-const EditHero = ({ heroImages, onUpdateHeroImages }) => {
+const EditHero = ({ heroImages, onUpdateHeroImages, onDeleteHeroImage }) => {
     const navigate = useNavigate();
     const [selectedImages, setSelectedImages] = useState([]);
     const [showSuccess, setShowSuccess] = useState(false);
@@ -76,7 +76,16 @@ const EditHero = ({ heroImages, onUpdateHeroImages }) => {
                         <div className="hero-preview-grid">
                             {heroImages && heroImages.length > 0 ? (
                                 heroImages.map((image) => (
-                                    <img key={image} src={resolveImageUrl(image)} alt="Hero" />
+                                    <div key={image} className="hero-preview-card">
+                                        <img src={resolveImageUrl(image)} alt="Hero" />
+                                        <button
+                                            type="button"
+                                            className="hero-delete-btn"
+                                            onClick={() => onDeleteHeroImage(image)}
+                                        >
+                                            <i className="fas fa-trash"></i>
+                                        </button>
+                                    </div>
                                 ))
                             ) : (
                                 <p>No hero images set yet.</p>
