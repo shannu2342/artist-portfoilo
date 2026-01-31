@@ -348,7 +348,17 @@
 @media (max-width: 680px) {
     .header-content {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
+    }
+
+    .logo-section {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .sidebar-toggle {
+        align-self: flex-start;
     }
 
     .admin-main {

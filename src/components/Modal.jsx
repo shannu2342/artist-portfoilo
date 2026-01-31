@@ -44,8 +44,6 @@ const Modal = ({ isOpen, onClose, artwork, onWhatsAppClick }) => {
                     </div>
 
                     <div className="modal-info">
-                        <h2 className="modal-title">{artwork.title}</h2>
-                        <p className="modal-description">{artwork.description}</p>
                         <button
                             className="modal-whatsapp-btn"
                             onClick={() => {
