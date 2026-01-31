@@ -5,7 +5,7 @@
 .hero {
     position: relative;
     overflow: hidden;
-    padding-top: 72px;
+    padding-top: 0;
 }
 
 .hero-slider {
@@ -122,15 +122,15 @@
 
 @media (min-width: 1024px) {
     .hero {
-        padding-top: 90px;
+        padding-top: 0;
     }
 
     .hero-slide {
-        height: calc(80vh - 90px);
+        height: 65vh;
     }
 
     .hero-overlay {
-        padding: 4rem 2rem;
+        padding: 5rem 2rem 4rem;
     }
 
     .hero-name {
