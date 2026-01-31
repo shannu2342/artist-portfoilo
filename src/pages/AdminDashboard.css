@@ -13,6 +13,7 @@
     flex-direction: column;
     gap: 24px;
     background: #ffffff;
+    min-height: 100dvh;
 }
 
 .sidebar-brand {
@@ -33,6 +34,7 @@
     flex-direction: column;
     gap: 10px;
     flex: 1;
+    overflow-y: auto;
 }
 
 .nav-item {
@@ -107,6 +109,10 @@
     margin: 0;
 }
 
+.admin-header .logo-section h1 {
+    color: #111111;
+}
+
 .logout-btn {
     background: #111111;
     color: #ffffff;
@@ -121,6 +127,18 @@
     gap: 10px;
     transition: var(--transition);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.admin-sidebar .logout-btn {
+    width: 100%;
+    justify-content: center;
+    border-radius: 14px;
+    padding: 12px 16px;
+    min-height: 44px;
+    height: auto;
+    margin-top: auto;
+    background: #111111;
+    box-shadow: none;
 }
 
 .logout-btn:hover {
@@ -178,6 +196,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
 }
 
 .dashboard-card:hover {
@@ -189,11 +208,14 @@
 .admin-dashboard .dashboard-card .card-icon {
     width: 56px;
     height: 56px;
+    min-width: 56px;
+    min-height: 56px;
+    max-width: 56px;
+    max-height: 56px;
     border-radius: 14px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 16px;
     font-size: 1.6rem;
     color: #111111;
     background: #f4f4f4;
@@ -201,6 +223,8 @@
     position: relative;
     z-index: 1;
     flex: 0 0 auto;
+    align-self: flex-start;
+    overflow: hidden;
 }
 
 .admin-dashboard .dashboard-card:hover .card-icon {
@@ -211,6 +235,10 @@
 .admin-dashboard .dashboard-card .card-icon::before,
 .admin-dashboard .dashboard-card .card-icon::after {
     content: none;
+}
+
+.admin-dashboard .dashboard-card .card-icon i {
+    line-height: 1;
 }
 
 .dashboard-card h3 {
@@ -334,11 +362,11 @@
     }
 
     .admin-header {
-        padding: 16px;
+        padding: 14px 16px;
     }
 
     .logo-section h1 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
 
     .quick-btn,
@@ -349,5 +377,14 @@
 
     .admin-main {
         padding: 16px;
+    }
+
+    .admin-sidebar {
+        padding: 16px 12px;
+        gap: 16px;
+    }
+
+    .nav-item {
+        padding: 10px 12px;
     }
 }

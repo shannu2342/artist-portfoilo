@@ -118,6 +118,24 @@
     background: #fff;
 }
 
+@media (min-width: 1024px) {
+    .hero-slide {
+        height: 60vh;
+    }
+
+    .hero-overlay {
+        padding: 4rem 2rem;
+    }
+
+    .hero-name {
+        font-size: 3.2rem;
+    }
+
+    .hero-tagline {
+        margin-bottom: 2rem;
+    }
+}
+
 .featured-artworks {
     background: var(--bg-white);
     padding: 6rem 0;
