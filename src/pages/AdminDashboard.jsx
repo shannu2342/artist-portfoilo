@@ -58,10 +58,12 @@ const AdminDashboard = () => {
                         <span>View Website</span>
                     </button>
                 </nav>
-                <button className="logout-btn" onClick={handleLogout}>
-                    <i className="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
-                </button>
+                <div className="sidebar-footer">
+                    <button className="logout-btn" onClick={handleLogout}>
+                        <i className="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
             </aside>
             <div className="sidebar-backdrop" onClick={() => setSidebarOpen(false)}></div>
 

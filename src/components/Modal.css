@@ -84,11 +84,12 @@
 .modal-image-container {
     position: relative;
     overflow: hidden;
-    background: var(--bg-light);
-    min-height: 500px;
+    background: #ffffff;
+    min-height: 520px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 16px;
 }
 
 .modal-image {
@@ -173,14 +174,17 @@
 
     .modal-image-container {
         min-height: 560px;
+        padding: 12px;
     }
 
     .modal-image-container .slideshow-container {
-        background: #0f0f0f;
+        background: #ffffff;
+        border-radius: 18px;
     }
 
     .modal-image-container .slide img {
         object-fit: cover;
+        background: #ffffff;
     }
 }
 

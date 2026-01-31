@@ -119,8 +119,12 @@
 }
 
 @media (min-width: 1024px) {
+    .hero {
+        padding-top: 84px;
+    }
+
     .hero-slide {
-        height: 60vh;
+        height: calc(60vh - 84px);
     }
 
     .hero-overlay {

@@ -10,7 +10,7 @@ const EditPainting = () => {
     const [selectedImages, setSelectedImages] = useState([]);
     const [paintingName, setPaintingName] = useState('');
     const [paintingDescription, setPaintingDescription] = useState('');
-    const [paintingCategory, setPaintingCategory] = useState('');
+    const [featured, setFeatured] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
 
     useEffect(() => {
@@ -20,7 +20,7 @@ const EditPainting = () => {
             setSelectedImages(initialPainting.images || [initialPainting.image]);
             setPaintingName(initialPainting.title);
             setPaintingDescription(initialPainting.description);
-            setPaintingCategory(initialPainting.category);
+            setFeatured(!!initialPainting.featured);
         } else {
             navigate('/admin/manage-paintings');
         }
@@ -47,7 +47,7 @@ const EditPainting = () => {
         const formData = new FormData();
         formData.append('title', paintingName);
         formData.append('description', paintingDescription);
-        formData.append('category', paintingCategory);
+        formData.append('featured', featured ? 'true' : 'false');
 
         // Append new files to FormData
         const files = Array.from(document.getElementById('imageInput').files);
@@ -191,22 +191,15 @@ const EditPainting = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="paintingCategory">
-                                    <i className="fas fa-tag"></i>
-                                    Category
+                                <label className="checkbox-label">
+                                    <input
+                                        type="checkbox"
+                                        checked={featured}
+                                        onChange={(e) => setFeatured(e.target.checked)}
+                                    />
+                                    <span className="checkmark"></span>
+                                    Feature on Home Page
                                 </label>
-                                <select
-                                    id="paintingCategory"
-                                    value={paintingCategory}
-                                    onChange={(e) => setPaintingCategory(e.target.value)}
-                                >
-                                    <option value="">Select Category</option>
-                                    <option value="acrylic">Acrylic</option>
-                                    <option value="oil">Oil</option>
-                                    <option value="watercolor">Watercolor</option>
-                                    <option value="digital">Digital</option>
-                                    <option value="mixed">Mixed Media</option>
-                                </select>
                             </div>
 
                             <div className="form-group">

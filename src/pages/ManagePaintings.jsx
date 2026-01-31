@@ -7,19 +7,18 @@ const ManagePaintings = ({ gallery, onDeleteArtwork, onUpdateArtwork }) => {
     const navigate = useNavigate();
     const [paintings, setPaintings] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [categoryFilter, setCategoryFilter] = useState('');
     const [selectedPainting, setSelectedPainting] = useState(null);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
     useEffect(() => {
-        setPaintings(gallery);
+        const sorted = [...gallery].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+        setPaintings(sorted);
     }, [gallery]);
 
     const filteredPaintings = paintings.filter(painting => {
         const matchesSearch = painting.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
             painting.description.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = !categoryFilter || painting.category === categoryFilter;
-        return matchesSearch && matchesCategory;
+        return matchesSearch;
     });
 
     const handleDeleteClick = (painting) => {
@@ -39,11 +38,24 @@ const ManagePaintings = ({ gallery, onDeleteArtwork, onUpdateArtwork }) => {
         navigate('/admin/edit-painting', { state: { painting } });
     };
 
+    const movePainting = (index, direction) => {
+        const targetIndex = index + direction;
+        if (targetIndex < 0 || targetIndex >= filteredPaintings.length) return;
+
+        const current = filteredPaintings[index];
+        const target = filteredPaintings[targetIndex];
+
+        const currentOrder = current.order ?? 0;
+        const targetOrder = target.order ?? 0;
+
+        onUpdateArtwork(current._id, { order: targetOrder });
+        onUpdateArtwork(target._id, { order: currentOrder });
+    };
+
     const handleBack = () => {
         navigate('/admin');
     };
 
-    const categories = ['', 'acrylic', 'oil', 'watercolor', 'digital', 'mixed'];
 
     return (
         <div className="manage-paintings">
@@ -83,19 +95,6 @@ const ManagePaintings = ({ gallery, onDeleteArtwork, onUpdateArtwork }) => {
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
                         </div>
-                        <div className="category-filter">
-                            <i className="fas fa-filter"></i>
-                            <select
-                                value={categoryFilter}
-                                onChange={(e) => setCategoryFilter(e.target.value)}
-                            >
-                                {categories.map(category => (
-                                    <option key={category} value={category}>
-                                        {category ? category.charAt(0).toUpperCase() + category.slice(1) + ' Paintings' : 'All Categories'}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
                     </div>
 
                     <div className="paintings-grid">
@@ -106,16 +105,17 @@ const ManagePaintings = ({ gallery, onDeleteArtwork, onUpdateArtwork }) => {
                                 <p>Try adjusting your search or filter</p>
                             </div>
                         ) : (
-                            filteredPaintings.map(painting => (
+                            filteredPaintings.map((painting, index) => (
                                 <div key={painting._id} className="painting-card">
                                     <div className="painting-image">
                                         <img
                                             src={resolveImageUrl(painting.images ? painting.images[0] : painting.image)}
                                             alt={painting.title}
                                         />
-                                        {painting.category && (
-                                            <div className={`category-badge ${painting.category}`}>
-                                                {painting.category.charAt(0).toUpperCase() + painting.category.slice(1)}
+                                        {painting.featured && (
+                                            <div className="featured-badge">
+                                                <i className="fas fa-star"></i>
+                                                Featured
                                             </div>
                                         )}
                                     </div>
@@ -124,9 +124,30 @@ const ManagePaintings = ({ gallery, onDeleteArtwork, onUpdateArtwork }) => {
                                         <p className="painting-description">{painting.description}</p>
                                     </div>
                                     <div className="painting-actions">
+                                        <button
+                                            className="move-btn"
+                                            onClick={() => movePainting(index, -1)}
+                                            aria-label="Move up"
+                                        >
+                                            <i className="fas fa-arrow-up"></i>
+                                        </button>
+                                        <button
+                                            className="move-btn"
+                                            onClick={() => movePainting(index, 1)}
+                                            aria-label="Move down"
+                                        >
+                                            <i className="fas fa-arrow-down"></i>
+                                        </button>
                                         <button className="edit-btn" onClick={() => handleEditClick(painting)}>
                                             <i className="fas fa-edit"></i>
                                             <span>Edit</span>
+                                        </button>
+                                        <button
+                                            className="feature-btn"
+                                            onClick={() => onUpdateArtwork(painting._id, { featured: !painting.featured })}
+                                        >
+                                            <i className={`fas ${painting.featured ? 'fa-star' : 'fa-star-half-alt'}`}></i>
+                                            <span>{painting.featured ? 'Unfeature' : 'Feature'}</span>
                                         </button>
                                         <button className="delete-btn" onClick={() => handleDeleteClick(painting)}>
                                             <i className="fas fa-trash"></i>

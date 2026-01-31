@@ -2,13 +2,13 @@ import Artwork from '../models/Artwork.js';
 import { deleteFile, uploadBuffer } from '../utils/gridfs.js';
 
 export const listArtworks = async (req, res) => {
-  const artworks = await Artwork.find().sort({ createdAt: -1 });
+  const artworks = await Artwork.find().sort({ order: 1, createdAt: -1 });
   return res.json(artworks);
 };
 
 export const createArtwork = async (req, res) => {
   try {
-    const { title, description, category = 'general', price = '' } = req.body;
+    const { title, description, category = 'general', price = '', featured, order } = req.body;
 
     if (!title || !description) {
       return res.status(400).json({ message: 'Title and description are required' });
@@ -28,7 +28,15 @@ export const createArtwork = async (req, res) => {
     );
     const imageUrls = images.map(id => `/api/files/${id}`);
 
-    const artwork = await Artwork.create({ title, description, images: imageUrls, category, price });
+    const artwork = await Artwork.create({
+      title,
+      description,
+      images: imageUrls,
+      category,
+      price,
+      featured: featured === true || featured === 'true',
+      order: order ? Number(order) : Date.now()
+    });
     return res.status(201).json(artwork);
   } catch (error) {
     console.error('Error creating artwork:', error);
@@ -39,7 +47,7 @@ export const createArtwork = async (req, res) => {
 export const updateArtwork = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, category, price } = req.body;
+    const { title, description, category, price, featured, order } = req.body;
 
     const artwork = await Artwork.findById(id);
     if (!artwork) {
@@ -51,6 +59,12 @@ export const updateArtwork = async (req, res) => {
     if (description) artwork.description = description;
     if (category) artwork.category = category;
     if (price) artwork.price = price;
+    if (featured !== undefined) {
+      artwork.featured = featured === true || featured === 'true';
+    }
+    if (order !== undefined) {
+      artwork.order = Number(order);
+    }
 
     // If new images were uploaded, add them to the images array
     if (req.files && req.files.length > 0) {

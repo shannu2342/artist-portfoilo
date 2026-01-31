@@ -10,7 +10,8 @@ import { resolveImageUrl } from '../utils/api';
 
 const HomePage = ({ gallery, whatsAppNumber, heroImages = [], artistProfile }) => {
     const [selectedArtwork, setSelectedArtwork] = useState(null);
-    const featuredArtworks = gallery.slice(0, 6);
+    const featuredList = gallery.filter((artwork) => artwork.featured);
+    const featuredArtworks = (featuredList.length > 0 ? featuredList : gallery).slice(0, 6);
     const heroTrackRef = useRef(null);
     const heroSlides = heroImages.length > 0 ? heroImages : [heroImage1, heroImage2, heroImage3];
     const heroIndexRef = useRef(0);
