@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './EditPainting.css';
+import { apiUrl, resolveImageUrl } from '../utils/api';
 
 const EditPainting = () => {
     const navigate = useNavigate();
@@ -55,7 +56,7 @@ const EditPainting = () => {
         });
 
         try {
-            const response = await fetch(`http://localhost:5000/api/artworks/${painting._id}`, {
+            const response = await fetch(apiUrl(`/api/artworks/${painting._id}`), {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -100,6 +101,8 @@ const EditPainting = () => {
                                 <span>Back to Gallery</span>
                             </button>
                             <button className="logout-btn" onClick={() => {
+                                localStorage.removeItem('adminLoggedIn');
+                                localStorage.removeItem('adminToken');
                                 localStorage.removeItem('isAdminLoggedIn');
                                 navigate('/admin/login');
                             }}>
@@ -134,7 +137,7 @@ const EditPainting = () => {
                                             {selectedImages.map((image, index) => (
                                                 <div key={index} className="image-preview">
                                                     <img
-                                                        src={image.startsWith('http') ? image : `http://localhost:5000${image}`}
+                                                        src={resolveImageUrl(image)}
                                                         alt={`Preview ${index + 1}`}
                                                     />
                                                     <button

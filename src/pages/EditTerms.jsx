@@ -2,23 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EditTerms.css';
 
-const EditTerms = () => {
+const EditTerms = ({ onUpdateTerms, termsContent: initialTerms }) => {
     const navigate = useNavigate();
     const [termsContent, setTermsContent] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
 
     useEffect(() => {
-        const savedTerms = localStorage.getItem('termsContent');
-        if (savedTerms) {
-            setTermsContent(savedTerms);
-        } else {
-            setTermsContent('Terms and conditions for Aurexon');
-        }
-    }, []);
+        setTermsContent(initialTerms || 'Terms and conditions for Aurexon');
+    }, [initialTerms]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        localStorage.setItem('termsContent', termsContent);
+        await onUpdateTerms(termsContent);
         setShowSuccess(true);
 
         setTimeout(() => {
@@ -45,6 +40,8 @@ const EditTerms = () => {
                                 <span>Back to Dashboard</span>
                             </button>
                             <button className="logout-btn" onClick={() => {
+                                localStorage.removeItem('adminLoggedIn');
+                                localStorage.removeItem('adminToken');
                                 localStorage.removeItem('isAdminLoggedIn');
                                 navigate('/admin/login');
                             }}>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EditServices.css';
 
-const EditServices = () => {
+const EditServices = ({ services: initialServices, onUpdateServices }) => {
     const navigate = useNavigate();
     const [services, setServices] = useState([]);
     const [newServiceName, setNewServiceName] = useState('');
@@ -10,9 +10,8 @@ const EditServices = () => {
     const [showSuccess, setShowSuccess] = useState(false);
 
     useEffect(() => {
-        const savedServices = localStorage.getItem('services');
-        if (savedServices) {
-            setServices(JSON.parse(savedServices));
+        if (Array.isArray(initialServices) && initialServices.length > 0) {
+            setServices(initialServices);
         } else {
             setServices([
                 {
@@ -37,9 +36,9 @@ const EditServices = () => {
                 }
             ]);
         }
-    }, []);
+    }, [initialServices]);
 
-    const handleAddService = (e) => {
+    const handleAddService = async (e) => {
         e.preventDefault();
 
         if (!newServiceName.trim()) return;
@@ -52,7 +51,7 @@ const EditServices = () => {
 
         const updatedServices = [...services, newService];
         setServices(updatedServices);
-        localStorage.setItem('services', JSON.stringify(updatedServices));
+        await onUpdateServices(updatedServices);
         setNewServiceName('');
         setNewServiceDescription('');
         setShowSuccess(true);
@@ -62,10 +61,10 @@ const EditServices = () => {
         }, 2000);
     };
 
-    const handleDeleteService = (id) => {
+    const handleDeleteService = async (id) => {
         const updatedServices = services.filter(service => service.id !== id);
         setServices(updatedServices);
-        localStorage.setItem('services', JSON.stringify(updatedServices));
+        await onUpdateServices(updatedServices);
         setShowSuccess(true);
 
         setTimeout(() => {
@@ -92,6 +91,8 @@ const EditServices = () => {
                                 <span>Back to Dashboard</span>
                             </button>
                             <button className="logout-btn" onClick={() => {
+                                localStorage.removeItem('adminLoggedIn');
+                                localStorage.removeItem('adminToken');
                                 localStorage.removeItem('isAdminLoggedIn');
                                 navigate('/admin/login');
                             }}>

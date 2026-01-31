@@ -227,6 +227,24 @@
     margin-bottom: 0;
 }
 
+.artist-photo {
+    width: min(100%, 320px);
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: 24px;
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.18);
+    border: 1px solid #f0f0f0;
+}
+
+.artist-name {
+    margin-top: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #111111;
+    text-align: center;
+}
+
 .services-preview {
     background: var(--bg-white);
     padding: 6rem 0;

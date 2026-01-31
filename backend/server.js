@@ -6,6 +6,7 @@ import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import artworkRoutes from './routes/artworkRoutes.js';
 import contentRoutes from './routes/contentRoutes.js';
+import fileRoutes from './routes/fileRoutes.js';
 import path from 'path';
 
 dotenv.config();
@@ -31,8 +32,12 @@ app.use(cors({
 app.use(express.json({ limit: '5mb' }));
 app.use(morgan('dev'));
 
+const publicDir = path.join(process.cwd(), 'public');
+const uploadsDir = path.join(publicDir, 'uploads');
+
 // Serve static files from public folder
-app.use(express.static('public'));
+app.use(express.static(publicDir));
+app.use('/uploads', express.static(uploadsDir));
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
@@ -41,6 +46,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/artworks', artworkRoutes);
 app.use('/api/content', contentRoutes);
+app.use('/api/files', fileRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err);

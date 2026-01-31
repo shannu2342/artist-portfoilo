@@ -6,12 +6,13 @@ import './HomePage.css';
 import heroImage1 from '../assets/image1.jpeg';
 import heroImage2 from '../assets/image2.jpeg';
 import heroImage3 from '../assets/image3.jpeg';
+import { resolveImageUrl } from '../utils/api';
 
-const HomePage = ({ gallery, whatsAppNumber }) => {
+const HomePage = ({ gallery, whatsAppNumber, heroImages = [], artistProfile }) => {
     const [selectedArtwork, setSelectedArtwork] = useState(null);
     const featuredArtworks = gallery.slice(0, 6);
     const heroTrackRef = useRef(null);
-    const heroSlides = [heroImage1, heroImage2, heroImage3];
+    const heroSlides = heroImages.length > 0 ? heroImages : [heroImage1, heroImage2, heroImage3];
     const heroIndexRef = useRef(0);
 
     useEffect(() => {
@@ -52,7 +53,7 @@ const HomePage = ({ gallery, whatsAppNumber }) => {
                     <div className="hero-track" ref={heroTrackRef}>
                         {heroSlides.map((image, index) => (
                             <div className="hero-slide" key={image}>
-                                <img src={image} alt={`Hero ${index + 1}`} />
+                                <img src={resolveImageUrl(image)} alt={`Hero ${index + 1}`} />
                                 <div className="hero-overlay">
                                     <div className="hero-text">
                                         <h1>
@@ -152,10 +153,21 @@ const HomePage = ({ gallery, whatsAppNumber }) => {
                             </Link>
                         </div>
                         <div className="about-image">
-                            <div className="artist-placeholder">
-                                <i className="fas fa-palette"></i>
-                                <p>Artist Profile</p>
-                            </div>
+                            {artistProfile?.image ? (
+                                <img
+                                    className="artist-photo"
+                                    src={resolveImageUrl(artistProfile.image)}
+                                    alt={artistProfile?.name || 'Artist'}
+                                />
+                            ) : (
+                                <div className="artist-placeholder">
+                                    <i className="fas fa-palette"></i>
+                                    <p>Artist Profile</p>
+                                </div>
+                            )}
+                            {artistProfile?.name && (
+                                <div className="artist-name">{artistProfile.name}</div>
+                            )}
                         </div>
                     </div>
                 </div>

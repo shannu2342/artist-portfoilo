@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminLogin.css';
+import { apiUrl } from '../utils/api';
 
 const AdminLogin = ({ onLogin }) => {
     const [email, setEmail] = useState('');
@@ -11,28 +12,40 @@ const AdminLogin = ({ onLogin }) => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         setError('');
 
-        // Simulate login process
-        setTimeout(() => {
-            // Mock admin credentials
-            const ADMIN_EMAIL = 'admin@artist.com';
-            const ADMIN_PASSWORD = 'admin123';
+        try {
+            const response = await fetch(apiUrl('/api/auth/login'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
 
-            if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-                onLogin();
-                if (remember) {
-                    localStorage.setItem('adminRemember', 'true');
-                }
-                navigate('/admin');
-            } else {
-                setError('Invalid email or password');
-                setIsLoading(false);
+            if (!response.ok) {
+                const data = await response.json().catch(() => ({}));
+                throw new Error(data.message || 'Invalid email or password');
             }
-        }, 1500);
+
+            const data = await response.json();
+            localStorage.setItem('adminToken', data.token);
+            localStorage.setItem('adminLoggedIn', 'true');
+            localStorage.setItem('isAdminLoggedIn', 'true');
+
+            if (remember) {
+                localStorage.setItem('adminRemember', 'true');
+            }
+
+            onLogin();
+            navigate('/admin');
+        } catch (err) {
+            setError(err.message || 'Login failed');
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -56,7 +69,7 @@ const AdminLogin = ({ onLogin }) => {
                         )}
 
                         <div className="form-group">
-                            <label for="email">Email Address</label>
+                            <label htmlFor="email">Email Address</label>
                             <div className="input-group">
                                 <i className="fas fa-envelope"></i>
                                 <input
@@ -71,7 +84,7 @@ const AdminLogin = ({ onLogin }) => {
                         </div>
 
                         <div className="form-group">
-                            <label for="password">Password</label>
+                            <label htmlFor="password">Password</label>
                             <div className="input-group">
                                 <i className="fas fa-lock"></i>
                                 <input
@@ -126,11 +139,7 @@ const AdminLogin = ({ onLogin }) => {
 
                     <div className="login-footer">
                         <p>
-                            For demo purposes, use:
-                        </p>
-                        <p style={{ fontSize: '0.9rem', color: 'var(--text-light)', marginTop: '0.5rem' }}>
-                            Email: admin@artist.com<br />
-                            Password: admin123
+                            Use your admin credentials to access the dashboard.
                         </p>
                     </div>
                 </div>

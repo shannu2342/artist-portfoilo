@@ -1,6 +1,7 @@
 import React from 'react';
 import './ArtworkCard.css';
 import watermarkLogo from '../assets/logo2-removebg-preview.png';
+import { resolveImageUrl } from '../utils/api';
 
 const ArtworkCard = ({ artwork, onWhatsAppClick, onViewClick }) => {
     const handleContextMenu = (e) => {
@@ -19,7 +20,7 @@ const ArtworkCard = ({ artwork, onWhatsAppClick, onViewClick }) => {
         <div className="artwork-card">
             <div className="artwork-image-container">
                 <img
-                    src={`http://localhost:5000${images[0]}`}
+                    src={resolveImageUrl(images[0])}
                     alt={artwork.title}
                     className="artwork-image"
                     onContextMenu={handleContextMenu}

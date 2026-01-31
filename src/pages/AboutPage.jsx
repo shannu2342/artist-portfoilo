@@ -1,7 +1,8 @@
 import React from 'react';
+import { resolveImageUrl } from '../utils/api';
 import './AboutPage.css';
 
-const AboutPage = ({ content }) => {
+const AboutPage = ({ content, artistProfile }) => {
     return (
         <div className="about-page">
             <section className="about-hero">
@@ -17,14 +18,24 @@ const AboutPage = ({ content }) => {
                 <div className="container">
                     <div className="about-grid">
                         <div className="about-image">
-                            <div className="artist-portrait">
-                                <i className="fas fa-palette"></i>
-                            </div>
+                            {artistProfile?.image ? (
+                                <img
+                                    className="artist-portrait-image"
+                                    src={resolveImageUrl(artistProfile.image)}
+                                    alt={artistProfile?.name || 'Artist'}
+                                />
+                            ) : (
+                                <div className="artist-portrait">
+                                    <i className="fas fa-palette"></i>
+                                </div>
+                            )}
                         </div>
                         <div className="about-text">
-                            <h2>About AUREXON</h2>
+                            <h2>{artistProfile?.name ? `About ${artistProfile.name}` : 'About AUREXON'}</h2>
                             <div className="about-description">
-                                {content || (
+                                {artistProfile?.bio || content ? (
+                                    <p>{artistProfile?.bio || content}</p>
+                                ) : (
                                     <>
                                         <p>
                                             AUREXON is a digital painting studio dedicated to pure creativity, artistic expression, and visual storytelling.

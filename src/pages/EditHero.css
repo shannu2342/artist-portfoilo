@@ -1,0 +1,36 @@
+.edit-hero .hero-preview {
+    margin-bottom: 24px;
+}
+
+.hero-preview h2 {
+    font-size: 1.6rem;
+    margin-bottom: 16px;
+    color: #111111;
+}
+
+.hero-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.hero-preview-grid img {
+    width: 100%;
+    border-radius: 14px;
+    border: 1px solid #ededed;
+    object-fit: cover;
+    aspect-ratio: 16 / 9;
+}
+
+.edit-hero-form input[type='file'] {
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #e5e5e5;
+    background: #ffffff;
+    width: 100%;
+}
+
+.edit-hero-form .help-text {
+    margin-top: 10px;
+    color: #666666;
+}

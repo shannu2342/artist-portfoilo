@@ -2,23 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EditAbout.css';
 
-const EditAbout = () => {
+const EditAbout = ({ onUpdateAbout, aboutContent: initialContent }) => {
     const navigate = useNavigate();
     const [aboutContent, setAboutContent] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
 
     useEffect(() => {
-        const savedAbout = localStorage.getItem('aboutContent');
-        if (savedAbout) {
-            setAboutContent(savedAbout);
-        } else {
-            setAboutContent('Welcome to Aurexon - Creating Beyond the Canvas');
-        }
-    }, []);
+        setAboutContent(initialContent || 'Welcome to Aurexon - Creating Beyond the Canvas');
+    }, [initialContent]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        localStorage.setItem('aboutContent', aboutContent);
+        await onUpdateAbout(aboutContent);
         setShowSuccess(true);
 
         setTimeout(() => {
@@ -45,6 +40,8 @@ const EditAbout = () => {
                                 <span>Back to Dashboard</span>
                             </button>
                             <button className="logout-btn" onClick={() => {
+                                localStorage.removeItem('adminLoggedIn');
+                                localStorage.removeItem('adminToken');
                                 localStorage.removeItem('isAdminLoggedIn');
                                 navigate('/admin/login');
                             }}>

@@ -18,6 +18,9 @@ import EditAbout from './pages/EditAbout';
 import EditServices from './pages/EditServices';
 import EditTerms from './pages/EditTerms';
 import EditWhatsApp from './pages/EditWhatsApp';
+import EditHero from './pages/EditHero';
+import EditArtistProfile from './pages/EditArtistProfile';
+import { apiUrl } from './utils/api';
 
 const App = () => {
     const [whatsAppNumber, setWhatsAppNumber] = useState('919876543210');
@@ -25,55 +28,54 @@ const App = () => {
     const [services, setServices] = useState([]);
     const [aboutContent, setAboutContent] = useState('');
     const [termsContent, setTermsContent] = useState('');
+    const [heroImages, setHeroImages] = useState([]);
+    const [artistProfile, setArtistProfile] = useState({ name: 'Aurexon', bio: '', image: '' });
     const [adminLoggedIn, setAdminLoggedIn] = useState(false);
 
     useEffect(() => {
-        // Load initial data
-        const savedNumber = localStorage.getItem('whatsappNumber');
-        if (savedNumber) {
-            setWhatsAppNumber(savedNumber);
-        }
-
-        // Fetch artworks from backend
         const fetchArtworks = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/artworks');
+                const response = await fetch(apiUrl('/api/artworks'));
                 if (response.ok) {
                     const artworks = await response.json();
                     setGallery(artworks);
                 }
             } catch (error) {
                 console.error('Error fetching artworks:', error);
-                // Fallback to localStorage if API fails
-                const savedGallery = localStorage.getItem('gallery');
-                if (savedGallery) {
-                    setGallery(JSON.parse(savedGallery));
-                } else {
-                    const initialGallery = [];
-                    setGallery(initialGallery);
-                    localStorage.setItem('gallery', JSON.stringify(initialGallery));
+            }
+        };
+
+        const fetchContent = async () => {
+            try {
+                const response = await fetch(apiUrl('/api/content'));
+                if (response.ok) {
+                    const content = await response.json();
+                    if (Array.isArray(content.services)) {
+                        setServices(content.services);
+                    } else if (typeof content.services === 'string' && content.services.trim()) {
+                        try {
+                            const parsed = JSON.parse(content.services);
+                            setServices(Array.isArray(parsed) ? parsed : []);
+                        } catch (err) {
+                            setServices([]);
+                        }
+                    } else {
+                        setServices([]);
+                    }
+                    setAboutContent(content.about || 'Welcome to Aurexon - Creating Beyond the Canvas');
+                    setTermsContent(content.terms || '');
+                    setWhatsAppNumber(content.whatsapp || '919876543210');
+                    setHeroImages(Array.isArray(content.heroImages) ? content.heroImages : []);
+                    setArtistProfile(content.artistProfile || { name: 'Aurexon', bio: '', image: '' });
                 }
+            } catch (error) {
+                console.error('Error fetching content:', error);
             }
         };
 
         fetchArtworks();
+        fetchContent();
 
-        const savedServices = localStorage.getItem('services');
-        if (savedServices) {
-            setServices(JSON.parse(savedServices));
-        }
-
-        const savedAbout = localStorage.getItem('aboutContent');
-        if (savedAbout) {
-            setAboutContent(savedAbout);
-        }
-
-        const savedTerms = localStorage.getItem('termsContent');
-        if (savedTerms) {
-            setTermsContent(savedTerms);
-        }
-
-        // Check if admin was previously logged in
         const savedAdminLoggedIn = localStorage.getItem('adminLoggedIn');
         if (savedAdminLoggedIn === 'true') {
             setAdminLoggedIn(true);
@@ -82,7 +84,7 @@ const App = () => {
 
     const addArtwork = async (artwork) => {
         try {
-            const response = await fetch('http://localhost:5000/api/artworks', {
+            const response = await fetch(apiUrl('/api/artworks'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -98,16 +100,12 @@ const App = () => {
             }
         } catch (error) {
             console.error('Error adding artwork:', error);
-            // Fallback to localStorage if API fails
-            const newGallery = [...gallery, artwork];
-            setGallery(newGallery);
-            localStorage.setItem('gallery', JSON.stringify(newGallery));
         }
     };
 
     const updateArtwork = async (id, updatedArtwork) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/artworks/${id}`, {
+            const response = await fetch(apiUrl(`/api/artworks/${id}`), {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -125,18 +123,12 @@ const App = () => {
             }
         } catch (error) {
             console.error('Error updating artwork:', error);
-            // Fallback to localStorage if API fails
-            const newGallery = gallery.map(art =>
-                art._id === id ? updatedArtwork : art
-            );
-            setGallery(newGallery);
-            localStorage.setItem('gallery', JSON.stringify(newGallery));
         }
     };
 
     const deleteArtwork = async (id) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/artworks/${id}`, {
+            const response = await fetch(apiUrl(`/api/artworks/${id}`), {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -149,31 +141,128 @@ const App = () => {
             }
         } catch (error) {
             console.error('Error deleting artwork:', error);
-            // Fallback to localStorage if API fails
-            const newGallery = gallery.filter(art => art._id !== id);
-            setGallery(newGallery);
-            localStorage.setItem('gallery', JSON.stringify(newGallery));
         }
     };
 
-    const updateServices = (newServices) => {
-        setServices(newServices);
-        localStorage.setItem('services', JSON.stringify(newServices));
+    const updateServices = async (newServices) => {
+        try {
+            const response = await fetch(apiUrl('/api/content'), {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                },
+                body: JSON.stringify({ services: newServices })
+            });
+
+            if (response.ok) {
+                const updated = await response.json();
+                setServices(Array.isArray(updated.services) ? updated.services : []);
+            }
+        } catch (error) {
+            console.error('Error updating services:', error);
+        }
     };
 
-    const updateAbout = (content) => {
-        setAboutContent(content);
-        localStorage.setItem('aboutContent', content);
+    const updateAbout = async (content) => {
+        try {
+            const response = await fetch(apiUrl('/api/content'), {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                },
+                body: JSON.stringify({ about: content })
+            });
+
+            if (response.ok) {
+                const updated = await response.json();
+                setAboutContent(updated.about || '');
+            }
+        } catch (error) {
+            console.error('Error updating about content:', error);
+        }
     };
 
-    const updateTerms = (content) => {
-        setTermsContent(content);
-        localStorage.setItem('termsContent', content);
+    const updateTerms = async (content) => {
+        try {
+            const response = await fetch(apiUrl('/api/content'), {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                },
+                body: JSON.stringify({ terms: content })
+            });
+
+            if (response.ok) {
+                const updated = await response.json();
+                setTermsContent(updated.terms || '');
+            }
+        } catch (error) {
+            console.error('Error updating terms:', error);
+        }
     };
 
-    const updateWhatsAppNumber = (number) => {
-        setWhatsAppNumber(number);
-        localStorage.setItem('whatsappNumber', number);
+    const updateWhatsAppNumber = async (number) => {
+        try {
+            const response = await fetch(apiUrl('/api/content'), {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                },
+                body: JSON.stringify({ whatsapp: number })
+            });
+
+            if (response.ok) {
+                const updated = await response.json();
+                setWhatsAppNumber(updated.whatsapp || '');
+            }
+        } catch (error) {
+            console.error('Error updating WhatsApp number:', error);
+        }
+    };
+
+    const updateHeroImages = async (formData) => {
+        try {
+            const response = await fetch(apiUrl('/api/content/hero-images'), {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                const updated = await response.json();
+                setHeroImages(Array.isArray(updated.heroImages) ? updated.heroImages : []);
+            }
+        } catch (error) {
+            console.error('Error updating hero images:', error);
+        }
+    };
+
+    const updateArtistProfile = async (formData) => {
+        try {
+            const response = await fetch(apiUrl('/api/content/artist-profile'), {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                const updated = await response.json();
+                setArtistProfile(updated.artistProfile || { name: 'Aurexon', bio: '', image: '' });
+                if (updated.about) {
+                    setAboutContent(updated.about);
+                }
+            }
+        } catch (error) {
+            console.error('Error updating artist profile:', error);
+        }
     };
 
     const loginAdmin = () => {
@@ -184,6 +273,7 @@ const App = () => {
     const logoutAdmin = () => {
         setAdminLoggedIn(false);
         localStorage.removeItem('adminLoggedIn');
+        localStorage.removeItem('adminToken');
     };
 
     return (
@@ -197,10 +287,12 @@ const App = () => {
                         <HomePage
                             gallery={gallery}
                             whatsAppNumber={whatsAppNumber}
+                            heroImages={heroImages}
+                            artistProfile={artistProfile}
                         />
                     } />
                     <Route path="/about" element={
-                        <AboutPage content={aboutContent} />
+                        <AboutPage content={aboutContent} artistProfile={artistProfile} />
                     } />
                     <Route path="/services" element={
                         <ServicesPage
@@ -261,21 +353,37 @@ const App = () => {
                     <Route path="/admin/edit-about" element={
                         <EditAbout
                             onUpdateAbout={updateAbout}
+                            aboutContent={aboutContent}
                         />
                     } />
                     <Route path="/admin/edit-services" element={
                         <EditServices
                             onUpdateServices={updateServices}
+                            services={services}
                         />
                     } />
                     <Route path="/admin/edit-terms" element={
                         <EditTerms
                             onUpdateTerms={updateTerms}
+                            termsContent={termsContent}
                         />
                     } />
                     <Route path="/admin/edit-whatsapp" element={
                         <EditWhatsApp
                             onUpdateWhatsAppNumber={updateWhatsAppNumber}
+                            whatsAppNumber={whatsAppNumber}
+                        />
+                    } />
+                    <Route path="/admin/edit-hero" element={
+                        <EditHero
+                            heroImages={heroImages}
+                            onUpdateHeroImages={updateHeroImages}
+                        />
+                    } />
+                    <Route path="/admin/edit-profile" element={
+                        <EditArtistProfile
+                            artistProfile={artistProfile}
+                            onUpdateArtistProfile={updateArtistProfile}
                         />
                     } />
                 </Routes>

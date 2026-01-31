@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AddPainting.css';
+import { apiUrl } from '../utils/api';
 
 const AddPainting = () => {
     const navigate = useNavigate();
@@ -40,7 +41,7 @@ const AddPainting = () => {
         });
 
         try {
-            const response = await fetch('http://localhost:5000/api/artworks', {
+            const response = await fetch(apiUrl('/api/artworks'), {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -87,6 +88,8 @@ const AddPainting = () => {
                                 <span>Back to Dashboard</span>
                             </button>
                             <button className="logout-btn" onClick={() => {
+                                localStorage.removeItem('adminLoggedIn');
+                                localStorage.removeItem('adminToken');
                                 localStorage.removeItem('isAdminLoggedIn');
                                 navigate('/admin/login');
                             }}>

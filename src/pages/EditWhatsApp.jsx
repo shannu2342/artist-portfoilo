@@ -2,23 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EditWhatsApp.css';
 
-const EditWhatsApp = () => {
+const EditWhatsApp = ({ onUpdateWhatsAppNumber, whatsAppNumber: initialNumber }) => {
     const navigate = useNavigate();
     const [whatsAppNumber, setWhatsAppNumber] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
 
     useEffect(() => {
-        const savedNumber = localStorage.getItem('whatsappNumber');
-        if (savedNumber) {
-            setWhatsAppNumber(savedNumber);
-        } else {
-            setWhatsAppNumber('919876543210');
-        }
-    }, []);
+        setWhatsAppNumber(initialNumber || '919876543210');
+    }, [initialNumber]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        localStorage.setItem('whatsappNumber', whatsAppNumber);
+        await onUpdateWhatsAppNumber(whatsAppNumber);
         setShowSuccess(true);
 
         setTimeout(() => {
@@ -45,6 +40,8 @@ const EditWhatsApp = () => {
                                 <span>Back to Dashboard</span>
                             </button>
                             <button className="logout-btn" onClick={() => {
+                                localStorage.removeItem('adminLoggedIn');
+                                localStorage.removeItem('adminToken');
                                 localStorage.removeItem('isAdminLoggedIn');
                                 navigate('/admin/login');
                             }}>

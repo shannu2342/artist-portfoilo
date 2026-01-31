@@ -1,6 +1,5 @@
 import Artwork from '../models/Artwork.js';
-import fs from 'fs';
-import path from 'path';
+import { deleteFile, uploadBuffer } from '../utils/gridfs.js';
 
 export const listArtworks = async (req, res) => {
   const artworks = await Artwork.find().sort({ createdAt: -1 });
@@ -20,9 +19,16 @@ export const createArtwork = async (req, res) => {
     }
 
     // Create image paths from uploaded files
-    const images = req.files.map(file => `/uploads/${file.filename}`);
+    const images = await Promise.all(
+      req.files.map(file => uploadBuffer({
+        buffer: file.buffer,
+        filename: file.originalname,
+        contentType: file.mimetype
+      }))
+    );
+    const imageUrls = images.map(id => `/api/files/${id}`);
 
-    const artwork = await Artwork.create({ title, description, images, category, price });
+    const artwork = await Artwork.create({ title, description, images: imageUrls, category, price });
     return res.status(201).json(artwork);
   } catch (error) {
     console.error('Error creating artwork:', error);
@@ -48,7 +54,14 @@ export const updateArtwork = async (req, res) => {
 
     // If new images were uploaded, add them to the images array
     if (req.files && req.files.length > 0) {
-      const newImages = req.files.map(file => `/uploads/${file.filename}`);
+      const ids = await Promise.all(
+        req.files.map(file => uploadBuffer({
+          buffer: file.buffer,
+          filename: file.originalname,
+          contentType: file.mimetype
+        }))
+      );
+      const newImages = ids.map(id => `/api/files/${id}`);
       artwork.images = [...artwork.images, ...newImages];
     }
 
@@ -68,13 +81,17 @@ export const deleteArtwork = async (req, res) => {
       return res.status(404).json({ message: 'Artwork not found' });
     }
 
-    // Delete uploaded images from server
-    artwork.images.forEach(imagePath => {
-      const fullPath = path.join(process.cwd(), 'public', imagePath);
-      if (fs.existsSync(fullPath)) {
-        fs.unlinkSync(fullPath);
+    // Delete uploaded images from GridFS
+    for (const imagePath of artwork.images || []) {
+      const match = imagePath.match(/\\/api\\/files\\/(.+)$/);
+      if (match && match[1]) {
+        try {
+          await deleteFile(match[1]);
+        } catch (err) {
+          console.error('Error deleting file from GridFS:', err.message);
+        }
       }
-    });
+    }
 
     return res.json({ message: 'Artwork deleted' });
   } catch (error) {

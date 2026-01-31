@@ -4,6 +4,7 @@ import path from 'path';
 import mongoose from 'mongoose';
 import Artwork from './models/Artwork.js';
 import connectDB from './config/db.js';
+import { uploadBuffer } from './utils/gridfs.js';
 
 dotenv.config();
 
@@ -35,7 +36,12 @@ const uploadImages = async () => {
         const artworks = [];
         for (let i = 0; i < imageFiles.length; i++) {
             const fileName = imageFiles[i];
-            const imagePath = `/uploads/${fileName}`;
+            const titleBase = path.basename(fileName, path.extname(fileName));
+            const exists = await Artwork.findOne({ title: titleBase }).lean();
+            if (exists) {
+                console.log(`Skipping (already in DB): ${fileName}`);
+                continue;
+            }
 
             // Create a simple title from the filename
             let title = path.basename(fileName, path.extname(fileName));
@@ -48,10 +54,17 @@ const uploadImages = async () => {
             ).join(' ');
 
             // Create artwork object
+            const buffer = fs.readFileSync(path.join(imagesFolder, fileName));
+            const fileId = await uploadBuffer({
+                buffer,
+                filename: fileName,
+                contentType: 'image/jpeg'
+            });
+
             const artwork = {
                 title: title || `Untitled Artwork ${i + 1}`,
                 description: 'Beautiful artwork created by Aurexon',
-                image: imagePath,
+                images: [`/api/files/${fileId}`],
                 category: 'digital',
                 price: ''
             };
@@ -59,30 +72,15 @@ const uploadImages = async () => {
             artworks.push(artwork);
         }
 
-        console.log('Creating artwork records...');
-        await Artwork.insertMany(artworks);
-        console.log(`Successfully uploaded ${artworks.length} artworks`);
-
-        // Copy images to public uploads folder
-        const uploadsFolder = path.join(process.cwd(), 'public', 'uploads');
-        if (!fs.existsSync(uploadsFolder)) {
-            fs.mkdirSync(uploadsFolder, { recursive: true });
+        if (artworks.length > 0) {
+            console.log('Creating artwork records...');
+            await Artwork.insertMany(artworks);
+            console.log(`Successfully uploaded ${artworks.length} artworks`);
+        } else {
+            console.log('No new artworks to insert');
         }
 
-        console.log('Copying images to uploads folder...');
-        for (const fileName of imageFiles) {
-            const srcPath = path.join(imagesFolder, fileName);
-            const destPath = path.join(uploadsFolder, fileName);
-
-            try {
-                fs.copyFileSync(srcPath, destPath);
-                console.log(`Copied: ${fileName}`);
-            } catch (error) {
-                console.error(`Error copying ${fileName}:`, error.message);
-            }
-        }
-
-        console.log('All images copied successfully');
+        console.log('Images uploaded to MongoDB GridFS');
 
     } catch (error) {
         console.error('Error uploading images:', error);

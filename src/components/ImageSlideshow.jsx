@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './ImageSlideshow.css';
 import watermarkLogo from '../assets/logo2-removebg-preview.png';
+import { resolveImageUrl } from '../utils/api';
 
 const ImageSlideshow = ({ images, alt }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -40,7 +41,7 @@ const ImageSlideshow = ({ images, alt }) => {
                         className={`slide ${index === currentIndex ? 'active' : ''}`}
                     >
                         <img
-                            src={image.startsWith('http') ? image : `http://localhost:5000${image}`}
+                            src={resolveImageUrl(image)}
                             alt={`${alt} - Image ${index + 1}`}
                             onContextMenu={handleContextMenu}
                             onDragStart={handleDragStart}
