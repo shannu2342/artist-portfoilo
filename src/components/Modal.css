@@ -166,14 +166,14 @@
 
 @media (min-width: 900px) {
     .modal-content {
-        max-width: 1600px;
+        max-width: 95vw;
         max-height: 95vh;
         width: 95vw;
         height: 95vh;
     }
 
     .modal-body {
-        grid-template-columns: 4fr 1fr;
+        grid-template-columns: 5fr 1fr;
         min-height: auto;
         height: 100%;
         display: grid;
@@ -208,6 +208,7 @@
     .modal-info {
         padding: 2.5rem;
         background: var(--bg-white);
+        overflow-y: auto;
     }
 
     .modal-title {
