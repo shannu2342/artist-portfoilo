@@ -86,7 +86,7 @@
     position: relative;
     overflow: hidden;
     background: #ffffff;
-    min-height: auto;
+    min-height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -164,41 +164,44 @@
     font-size: 1.5rem;
 }
 
+/* Desktop styles - 900px and above */
 @media (min-width: 900px) {
     .modal-content {
-        max-width: none;
-        width: 98vw;
-        max-height: 95vh;
-        height: 95vh;
+        max-width: 1200px;
+        width: 90vw;
+        max-height: 85vh;
+        height: auto;
     }
 
     .modal-body {
-        grid-template-columns: 3fr 2fr;
-        min-height: auto;
-        height: 100%;
-        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        min-height: 600px;
+        height: auto;
     }
 
     .modal-image-container {
-        min-height: auto;
-        height: 100%;
+        min-height: 600px;
+        height: auto;
+        max-height: 85vh;
         padding: 0;
-        background: #f8f9fa;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        background: #ffffff;
     }
 
     .modal-image-container .slideshow-container {
-        background: #f8f9fa;
+        background: #ffffff;
         border-radius: 0;
         height: 100%;
         width: 100%;
+        min-height: 600px;
+    }
+
+    .modal-image-container .slide {
+        background: #ffffff;
     }
 
     .modal-image-container .slide img {
-        object-fit: cover;
-        background: #f8f9fa;
+        object-fit: contain;
+        background: #ffffff;
         width: 100%;
         height: 100%;
         max-width: 100%;
@@ -206,35 +209,86 @@
     }
 
     .modal-info {
-        padding: 2.5rem;
+        padding: 3rem;
         background: var(--bg-white);
-        overflow-y: visible;
+        overflow-y: auto;
+        max-height: 85vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
 
     .modal-title {
-        font-size: 1.8rem;
-        margin-bottom: 1.25rem;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .modal-description {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+    }
+
+    .modal-whatsapp-btn {
+        padding: 1.25rem 2rem;
+        font-size: 1.1rem;
+    }
+
+    .modal-whatsapp-btn i {
+        font-size: 1.5rem;
+    }
+}
+
+/* Large desktop styles - 1200px and above */
+@media (min-width: 1200px) {
+    .modal-content {
+        max-width: 1400px;
+        width: 85vw;
+    }
+
+    .modal-body {
+        grid-template-columns: 1.3fr 1fr;
+        min-height: 700px;
+    }
+
+    .modal-image-container {
+        min-height: 700px;
+    }
+
+    .modal-image-container .slideshow-container {
+        min-height: 700px;
+    }
+}
+
+/* Tablet styles - between 768px and 899px */
+@media (min-width: 769px) and (max-width: 899px) {
+    .modal-content {
+        max-width: 95vw;
+        width: 95vw;
+    }
+
+    .modal-body {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .modal-image-container {
+        min-height: 450px;
+    }
+
+    .modal-info {
+        padding: 2rem;
+    }
+
+    .modal-title {
+        font-size: 1.6rem;
     }
 
     .modal-description {
         font-size: 1rem;
-        line-height: 1.6;
-        margin-bottom: 1.5rem;
-    }
-
-    .modal-whatsapp-btn {
-        padding: 1rem 1.5rem;
-        font-size: 1rem;
-    }
-
-    .modal-whatsapp-btn i {
-        font-size: 1.2rem;
     }
 }
 
+/* Mobile styles - 768px and below */
 @media (max-width: 768px) {
     .modal-overlay {
         padding: 1rem;
@@ -251,6 +305,7 @@
 
     .modal-image-container {
         min-height: 300px;
+        max-height: 50vh;
     }
 
     .modal-info {
