@@ -126,19 +126,40 @@
     }
 
     .hero-slide {
-        height: 65vh;
+        height: 75vh;
     }
 
     .hero-overlay {
-        padding: 5rem 2rem 4rem;
+        padding: 6rem 3rem 5rem;
+    }
+
+    .hero-greeting {
+        font-size: 1.35rem;
     }
 
     .hero-name {
-        font-size: 3.2rem;
+        font-size: 4.5rem;
+        margin-bottom: 1.75rem;
     }
 
     .hero-tagline {
-        margin-bottom: 2rem;
+        font-size: 1.35rem;
+        margin-bottom: 3rem;
+    }
+
+    .hero-actions {
+        gap: 2rem;
+    }
+
+    .hero-actions .btn {
+        padding: 1.25rem 2.5rem;
+        font-size: 1.1rem;
+    }
+
+    .hero-control {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
     }
 }
 
