@@ -126,7 +126,7 @@
     }
 
     .hero-slide {
-        height: calc(75vh - 90px);
+        height: calc(80vh - 90px);
     }
 
     .hero-overlay {

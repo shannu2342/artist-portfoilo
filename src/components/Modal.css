@@ -165,16 +165,16 @@
 
 @media (min-width: 900px) {
     .modal-content {
-        max-width: 1300px;
+        max-width: 1400px;
     }
 
     .modal-body {
-        grid-template-columns: 1.7fr 0.7fr;
-        min-height: 620px;
+        grid-template-columns: 2fr 0.6fr;
+        min-height: 560px;
     }
 
     .modal-image-container {
-        min-height: 620px;
+        min-height: 560px;
         padding: 0;
     }
 
