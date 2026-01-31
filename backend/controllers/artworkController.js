@@ -83,7 +83,7 @@ export const deleteArtwork = async (req, res) => {
 
     // Delete uploaded images from GridFS
     for (const imagePath of artwork.images || []) {
-      const match = imagePath.match(/\\/api\\/files\\/(.+)$/);
+      const match = imagePath.match(/\/api\/files\/(.+)$/);
       if (match && match[1]) {
         try {
           await deleteFile(match[1]);
