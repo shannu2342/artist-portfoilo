@@ -7,8 +7,7 @@ const ManagePaintings = ({ gallery, onDeleteArtwork, onUpdateArtwork }) => {
     const navigate = useNavigate();
     const [paintings, setPaintings] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [selectedPainting, setSelectedPainting] = useState(null);
-    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [pendingDelete, setPendingDelete] = useState(null);
 
     useEffect(() => {
         const sorted = [...gallery].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
@@ -50,16 +49,17 @@ const ManagePaintings = ({ gallery, onDeleteArtwork, onUpdateArtwork }) => {
     };
 
     const handleDeleteClick = (painting) => {
-        setSelectedPainting(painting);
-        setShowDeleteConfirm(true);
+        setPendingDelete(painting);
+    };
+
+    const cancelDelete = () => {
+        setPendingDelete(null);
     };
 
     const confirmDelete = () => {
-        if (!selectedPainting) return;
-
-        onDeleteArtwork(selectedPainting._id);
-        setShowDeleteConfirm(false);
-        setSelectedPainting(null);
+        if (!pendingDelete) return;
+        onDeleteArtwork(pendingDelete._id);
+        setPendingDelete(null);
     };
 
     const handleEditClick = (painting) => {
@@ -202,28 +202,21 @@ const ManagePaintings = ({ gallery, onDeleteArtwork, onUpdateArtwork }) => {
                 </main>
             </div>
 
-            {/* Delete Confirmation Modal */}
-            {showDeleteConfirm && (
-                <div className="confirm-modal">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <i className="fas fa-exclamation-triangle"></i>
-                            <h2>Confirm Delete</h2>
-                        </div>
-                        <div className="modal-body">
-                            <p>Are you sure you want to delete "<strong>{selectedPainting?.title}</strong>"?</p>
-                            <p>This action cannot be undone.</p>
-                        </div>
-                        <div className="modal-actions">
-                            <button className="cancel-modal" onClick={() => setShowDeleteConfirm(false)}>
-                                <i className="fas fa-times"></i>
-                                <span>Cancel</span>
-                            </button>
-                            <button className="confirm-delete" onClick={confirmDelete}>
-                                <i className="fas fa-check"></i>
-                                <span>Delete</span>
-                            </button>
-                        </div>
+            {pendingDelete && (
+                <div className="delete-toast" role="alert">
+                    <div className="delete-toast__content">
+                        <i className="fas fa-exclamation-triangle"></i>
+                        <span>
+                            Delete "<strong>{pendingDelete.title}</strong>"? This cannot be undone.
+                        </span>
+                    </div>
+                    <div className="delete-toast__actions">
+                        <button className="toast-cancel" onClick={cancelDelete}>
+                            Cancel
+                        </button>
+                        <button className="toast-confirm" onClick={confirmDelete}>
+                            Delete
+                        </button>
                     </div>
                 </div>
             )}
