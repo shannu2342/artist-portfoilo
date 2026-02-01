@@ -50,24 +50,26 @@ const AdminLogin = ({ onLogin }) => {
 
     return (
         <div className="admin-login">
-            <div className="login-container">
+            <div className="login-shell">
                 <div className="login-card">
                     <div className="login-header">
                         <div className="login-icon">
                             <i className="fas fa-crown"></i>
                         </div>
-                        <h1>Admin Dashboard</h1>
-                        <p>Welcome back! Please login to continue</p>
+                        <div>
+                            <h1>Admin Login</h1>
+                            <p>Sign in to manage the portfolio.</p>
+                        </div>
                     </div>
 
-                    <form className="login-form" onSubmit={handleSubmit}>
-                        {error && (
-                            <div className="error-message">
-                                <i className="fas fa-exclamation-circle"></i>
-                                <span>{error}</span>
-                            </div>
-                        )}
+                    {error && (
+                        <div className="error-message">
+                            <i className="fas fa-exclamation-circle"></i>
+                            <span>{error}</span>
+                        </div>
+                    )}
 
+                    <form className="login-form" onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="email">Email Address</label>
                             <div className="input-group">
@@ -88,7 +90,7 @@ const AdminLogin = ({ onLogin }) => {
                             <div className="input-group">
                                 <i className="fas fa-lock"></i>
                                 <input
-                                    type={showPassword ? "text" : "password"}
+                                    type={showPassword ? 'text' : 'password'}
                                     id="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
@@ -99,7 +101,7 @@ const AdminLogin = ({ onLogin }) => {
                                     type="button"
                                     className="show-password-btn"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    aria-label={showPassword ? "Hide password" : "Show password"}
+                                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                                 >
                                     <i className={`fas fa-${showPassword ? 'eye-slash' : 'eye'}`}></i>
                                 </button>
@@ -138,9 +140,7 @@ const AdminLogin = ({ onLogin }) => {
                     </form>
 
                     <div className="login-footer">
-                        <p>
-                            Use your admin credentials to access the dashboard.
-                        </p>
+                        Use your admin credentials to access the dashboard.
                     </div>
                 </div>
             </div>
