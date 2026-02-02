@@ -6,7 +6,7 @@ import './HomePage.css';
 import heroImage1 from '../assets/image1.jpeg';
 import heroImage2 from '../assets/image2.jpeg';
 import heroImage3 from '../assets/image3.jpeg';
-import heroLogo from '../assets/Aurexon_logo_with_gold_accent-removebg-preview.png';
+import heroLogo from '../assets/logo2.jpeg';
 import { resolveImageUrl } from '../utils/api';
 
 const HomePage = ({ gallery, whatsAppNumber, heroImages = [], artistProfile }) => {
