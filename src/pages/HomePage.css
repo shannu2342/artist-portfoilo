@@ -85,18 +85,11 @@
     height: clamp(48px, 7vw, 110px);
     width: auto;
     display: block;
-    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.4));
+    filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.55)) contrast(1.2) saturate(1.15);
     background: transparent;
-    mix-blend-mode: lighten;
+    mix-blend-mode: normal;
 }
 
-.hero-line {
-    width: min(280px, 70%);
-    height: 4px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, #caa14a, #f1d07a, #caa14a);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
-}
 
 .hero-tagline {
     font-size: 1.25rem;
@@ -195,10 +188,6 @@
         height: clamp(70px, 8vw, 140px);
     }
 
-    .hero-line {
-        width: 320px;
-        height: 4px;
-    }
 
     .hero-tagline {
         font-size: 1.75rem;
