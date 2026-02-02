@@ -119,9 +119,11 @@
 
 .watermark-overlay {
     position: absolute;
-    bottom: 24px;
-    right: 24px;
-    left: auto;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
     z-index: 5;
     opacity: 0.9;
     pointer-events: none;

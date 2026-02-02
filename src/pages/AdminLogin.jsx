@@ -51,13 +51,37 @@ const AdminLogin = ({ onLogin }) => {
     return (
         <div className="admin-login">
             <div className="login-shell">
+                <div className="login-panel">
+                    <div className="panel-badge">
+                        <i className="fas fa-palette"></i>
+                        <span>Artist Admin</span>
+                    </div>
+                    <h1>Manage Aurexon</h1>
+                    <p>Upload new works, curate your gallery, and update hero content in one place.</p>
+                    <div className="panel-strip"></div>
+                    <div className="panel-stats">
+                        <div>
+                            <strong>01</strong>
+                            <span>Upload Artwork</span>
+                        </div>
+                        <div>
+                            <strong>02</strong>
+                            <span>Feature Pieces</span>
+                        </div>
+                        <div>
+                            <strong>03</strong>
+                            <span>Publish Updates</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="login-card">
                     <div className="login-header">
                         <div className="login-icon">
                             <i className="fas fa-crown"></i>
                         </div>
                         <div>
-                            <h1>Admin Login</h1>
+                            <h2>Admin Login</h2>
                             <p>Sign in to manage the portfolio.</p>
                         </div>
                     </div>
