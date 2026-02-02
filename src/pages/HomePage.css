@@ -86,7 +86,7 @@
     height: clamp(48px, 7vw, 110px);
     width: auto;
     display: block;
-    filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.45));
+    filter: brightness(0) invert(1) drop-shadow(0 8px 22px rgba(0, 0, 0, 0.45));
     background: transparent;
     mix-blend-mode: normal;
 }
