@@ -6,7 +6,6 @@ import './HomePage.css';
 import heroImage1 from '../assets/image1.jpeg';
 import heroImage2 from '../assets/image2.jpeg';
 import heroImage3 from '../assets/image3.jpeg';
-import heroLogo from '../assets/logo-removebg-preview.png';
 import { resolveImageUrl } from '../utils/api';
 
 const HomePage = ({ gallery, whatsAppNumber, heroImages = [], artistProfile }) => {
@@ -60,8 +59,8 @@ const HomePage = ({ gallery, whatsAppNumber, heroImages = [], artistProfile }) =
                                     <div className="hero-text">
                                         <h1 className="hero-title">
                                             <span className="hero-greeting">Welcome to</span>
-                                            <span className="hero-logo-wrap">
-                                                <img src={heroLogo} alt="Aurexon" className="hero-logo" />
+                                            <span className="hero-logo-text" aria-label="Aurexon">
+                                                AURE<span className="hero-logo-x">X</span>ON
                                             </span>
                                             <span className="hero-line"></span>
                                         </h1>
