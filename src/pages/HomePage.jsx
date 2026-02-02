@@ -63,6 +63,7 @@ const HomePage = ({ gallery, whatsAppNumber, heroImages = [], artistProfile }) =
                                             <span className="hero-logo-wrap">
                                                 <img src={heroLogo} alt="Aurexon" className="hero-logo" />
                                             </span>
+                                            <span className="hero-line"></span>
                                         </h1>
                                         <p className="hero-tagline">Creating Beyond the Canvas</p>
                                         <div className="hero-actions">
