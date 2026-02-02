@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './ImageSlideshow.css';
-import watermarkLogo from '../assets/logo2.png';
+import watermarkLogo from '../assets/logo2-removebg-preview.png';
 import { resolveImageUrl } from '../utils/api';
 
 const ImageSlideshow = ({ images, alt }) => {
