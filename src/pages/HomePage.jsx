@@ -6,6 +6,7 @@ import './HomePage.css';
 import heroImage1 from '../assets/image1.jpeg';
 import heroImage2 from '../assets/image2.jpeg';
 import heroImage3 from '../assets/image3.jpeg';
+import heroLogo from '../assets/logo-removebg-preview.png';
 import { resolveImageUrl } from '../utils/api';
 
 const HomePage = ({ gallery, whatsAppNumber, heroImages = [], artistProfile }) => {
@@ -57,9 +58,12 @@ const HomePage = ({ gallery, whatsAppNumber, heroImages = [], artistProfile }) =
                                 <img src={resolveImageUrl(image)} alt={`Hero ${index + 1}`} />
                                 <div className="hero-overlay">
                                     <div className="hero-text">
-                                        <h1>
+                                        <h1 className="hero-title">
                                             <span className="hero-greeting">Welcome to</span>
-                                            <span className="hero-name">Aurexon</span>
+                                            <span className="hero-logo-wrap">
+                                                <img src={heroLogo} alt="Aurexon" className="hero-logo" />
+                                            </span>
+                                            <span className="hero-line"></span>
                                         </h1>
                                         <p className="hero-tagline">Creating Beyond the Canvas</p>
                                         <div className="hero-actions">

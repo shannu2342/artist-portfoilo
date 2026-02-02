@@ -58,6 +58,14 @@
     color: var(--text-white);
 }
 
+.hero-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0 0 0.5rem 0;
+}
+
 .hero-greeting {
     display: block;
     font-size: 1.25rem;
@@ -67,20 +75,33 @@
     font-family: 'Inter', sans-serif;
 }
 
-.hero-name {
+.hero-logo-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-logo {
+    height: clamp(48px, 7vw, 110px);
+    width: auto;
     display: block;
-    font-size: 4rem;
-    font-weight: 900;
-    margin-bottom: 1.5rem;
-    color: var(--text-white);
-    font-family: 'Playfair Display', serif;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.4));
+    background: transparent;
+    mix-blend-mode: lighten;
+}
+
+.hero-line {
+    width: min(280px, 70%);
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #caa14a, #f1d07a, #caa14a);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
 .hero-tagline {
     font-size: 1.25rem;
     line-height: 1.8;
-    margin-bottom: 3rem;
+    margin: 0.4rem 0 2.6rem;
     color: rgba(255, 255, 255, 0.95);
     font-weight: 300;
 }
@@ -104,8 +125,8 @@
 
 .hero-control {
     pointer-events: auto;
-    background: rgba(255, 255, 255, 0.8);
-    border: none;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.55);
     width: 44px;
     height: 44px;
     border-radius: 50%;
@@ -119,7 +140,29 @@
 
 .hero-control:hover {
     transform: translateY(-2px);
-    background: #fff;
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.hero-actions .btn {
+    backdrop-filter: blur(6px);
+}
+
+.hero-actions .btn.btn-primary {
+    background: rgba(233, 30, 99, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.hero-actions .btn.btn-primary:hover {
+    background: rgba(233, 30, 99, 0.92);
+}
+
+.hero-actions .btn.btn-whatsapp {
+    background: rgba(37, 211, 102, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.hero-actions .btn.btn-whatsapp:hover {
+    background: rgba(37, 211, 102, 0.95);
 }
 
 @media (min-width: 1024px) {
@@ -148,14 +191,18 @@
         font-size: 1.75rem;
     }
 
-    .hero-name {
-        font-size: 6.5rem;
-        margin-bottom: 2.5rem;
+    .hero-logo {
+        height: clamp(70px, 8vw, 140px);
+    }
+
+    .hero-line {
+        width: 320px;
+        height: 4px;
     }
 
     .hero-tagline {
         font-size: 1.75rem;
-        margin-bottom: 4rem;
+        margin: 0.5rem 0 3rem;
     }
 
     .hero-actions {
