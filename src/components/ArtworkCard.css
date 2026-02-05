@@ -34,8 +34,8 @@
     position: absolute;
     bottom: 0.75rem;
     right: 0.75rem;
-    width: 72px;
-    height: 72px;
+    width: 86px;
+    height: 86px;
     background: transparent;
     border-radius: 0;
     display: flex;
@@ -44,7 +44,7 @@
     color: var(--text-white);
     backdrop-filter: none;
     z-index: 10;
-    opacity: 0.4;
+    opacity: 0.6;
 }
 
 .watermark-logo {
