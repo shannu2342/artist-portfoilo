@@ -44,16 +44,23 @@ const Modal = ({ isOpen, onClose, artwork, onWhatsAppClick }) => {
                     </div>
 
                     <div className="modal-info">
-                        <button
-                            className="modal-whatsapp-btn"
-                            onClick={() => {
-                                onWhatsAppClick(artwork);
-                                onClose();
-                            }}
-                        >
-                            <i className="fab fa-whatsapp"></i>
-                            <span>Interested / Buy via WhatsApp</span>
-                        </button>
+                        <div className="modal-info-header">
+                            <span className="modal-pill">Featured Artwork</span>
+                            <h2 className="modal-title">{artwork.title}</h2>
+                            <p className="modal-description">{artwork.description}</p>
+                        </div>
+                        <div className="modal-info-actions">
+                            <button
+                                className="modal-whatsapp-btn"
+                                onClick={() => {
+                                    onWhatsAppClick(artwork);
+                                    onClose();
+                                }}
+                            >
+                                <i className="fab fa-whatsapp"></i>
+                                <span>Interested / Buy via WhatsApp</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
