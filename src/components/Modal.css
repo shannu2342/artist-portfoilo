@@ -97,7 +97,7 @@
     width: 110px;
     height: 70px;
     background: transparent;
-    mix-blend-mode: normal;
+    mix-blend-mode: multiply;
     filter: none;
 }
 
