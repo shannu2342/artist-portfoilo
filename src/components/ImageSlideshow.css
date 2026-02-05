@@ -130,11 +130,12 @@
 }
 
 .watermark-logo {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 70px;
     object-fit: contain;
     background: transparent;
-    mix-blend-mode: multiply;
+    mix-blend-mode: normal;
+    opacity: 0.6;
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6)) saturate(1.15);
 }
 
@@ -170,7 +171,7 @@
     }
 
     .watermark-logo {
-        width: 56px;
-        height: 56px;
+        width: 88px;
+        height: 52px;
     }
 }
