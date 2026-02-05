@@ -44,6 +44,7 @@
     color: var(--text-white);
     backdrop-filter: none;
     z-index: 10;
+    opacity: 0.4;
 }
 
 .watermark-logo {
