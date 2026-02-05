@@ -1,6 +1,6 @@
 import React from 'react';
 import './ArtworkCard.css';
-import watermarkLogo from '../assets/logo2.png';
+import watermarkLogo from '../assets/logo2-removebg-preview.png';
 import { resolveImageUrl } from '../utils/api';
 
 const ArtworkCard = ({ artwork, onWhatsAppClick, onViewClick }) => {

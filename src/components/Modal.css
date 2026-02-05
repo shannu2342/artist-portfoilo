@@ -77,11 +77,15 @@
     right: 18px;
     bottom: 18px;
     z-index: 6;
+    opacity: 0.45;
 }
 
 .modal-image-container .watermark-logo {
-    width: 72px;
-    height: 72px;
+    width: 110px;
+    height: 70px;
+    background: transparent;
+    mix-blend-mode: multiply;
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
 }
 
 .modal-info {
